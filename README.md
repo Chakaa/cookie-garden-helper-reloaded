@@ -6,7 +6,7 @@ This is the Steam version of cookie-garden-helper (https://github.com/yannprada/
 
 ## How to use
 
-Import the CookieGardenHelper-reloaded folder in your "common\Cookie Clicker\resources\app\mods\local" folder
+Import the CookieGardenHelper-reloaded folder in `<steam>\SteamApps\common\Cookie Clicker\resources\app\mods\local`
 There should only be info.txt and main.js in that folder, no sub-folders
 
 ## How it works
