@@ -1,4 +1,4 @@
-# cookie-garden-helper
+# cookie-garden-helper-reloaded
 
 Automate your garden in Cookie Clicker
 
@@ -11,7 +11,7 @@ There should only be info.txt and main.js in that folder, no sub-folders
 
 ## How it works
 
-To begin, click the button ***Cookie Garden Helper***, at the bottom of your
+To begin, click the button ***CGHR***, at the bottom of your
 garden / farms. There, you can configure how you would like the mod to operate.
 
 The mod loop through each unlocked tile, then tries to auto-harvest
