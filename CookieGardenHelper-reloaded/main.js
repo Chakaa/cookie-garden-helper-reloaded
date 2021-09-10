@@ -210,7 +210,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			this.doc.elId('cookieGardenHelperReloaded').remove();
 		};
 	},
-	readmeLink:function() { return 'https://github.com/yannprada/cookie-garden-helper/blob/master/README.md#how-it-works'; },
+	readmeLink:function() { return 'https://github.com/Chakaa/cookie-garden-helper-reloaded/blob/master/README.md#how-it-works'; },
 	
 	build:function() {
 		if(	l("cookieGardenHelperReloadedProductButton") )
