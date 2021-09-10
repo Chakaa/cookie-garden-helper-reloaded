@@ -456,7 +456,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}
 	},
 	harvest:function(x, y){ this.minigame.harvest(x, y); },
-	fillGardenWithSelectedSeed:function(seedId, x, y){
+	fillGardenWithSelectedSeed:function(){
 		if (this.selectedSeed() > -1) {
 		  this.forEachTile((x, y) => {
 			if (this.tileIsEmpty(x, y)) {
