@@ -14,9 +14,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			qSelAll: document.querySelectorAll.bind(document),
 		};
 		
-		if(!Game.modSaveData[this.modid]){
-			this.build();
-		}
+		this.build();
 		this.start();
 		
 		if (Game.prefs.popups) Game.Popup(this.name + ' loaded!');
