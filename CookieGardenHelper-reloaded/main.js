@@ -408,7 +408,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	secondsBeforeNextTick:function(){ return (this.minigame().nextStep-Date.now()) / 1000; },
 	selectedSeed:function(){ return this.minigame().seedSelected; },
-	selectedSeed:function(seedId){ this.minigame().seedSelected = seedId; },
+	selectSeed:function(seedId){ this.minigame().seedSelected = seedId; },
 	clonePlot:function(){
 		let plot = this.clone(this.minigame().plot);
 		for (let x=0; x<6; x++) {
