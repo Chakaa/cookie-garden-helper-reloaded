@@ -486,11 +486,19 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}
 	},
 	handleDying:function(plant, x, y){
-		if (this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
-		  this.harvest(x, y);
-		} else if (this.config.autoHarvestDying && this.secondsBeforeNextTick() <= this.config.autoHarvestDyingSeconds) {
-		  this.harvest(x, y);
+		if(this.isExplodable(plant)){
+			if (this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
+			this.harvest(x, y);
+			} else if (this.config.autoHarvestDying && this.secondsBeforeNextTick() <= this.config.autoHarvestDyingSeconds) {
+			this.harvest(x, y);
+			}
 		}
+	},
+	isExplodable:function(plant){
+		//plant.key!="crumbspore" && plant.key!="doughshroom"
+		//This plants are meant to let explode, rather than harvested.
+		var expl = ["crumbspore","doughshroom"];
+		return expl.indexOf[plant.key]>=0
 	},
 	run:function() {
 		if(this.isActive()){
