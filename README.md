@@ -68,7 +68,9 @@ This section is pretty obvious. Only one tool is there for now:
 ### Seed List
 
 This section displays all seeds in the game, in red if you have yet to unlock it.
+
 **Hovering** on its name will display suggested seed mutation layout.
+
 **Clicking** on its name will overwrite the saved plot by the suggested layout, for future use with **Auto-plant**.
 
 ## Sacrifice garden
