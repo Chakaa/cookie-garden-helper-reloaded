@@ -497,7 +497,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	isExplodable:function(plant){
 		//This plants are meant to let explode, rather than harvested.
 		var expl = ["crumbspore","doughshroom"];
-		return expl.indexOf[plant.key]>=0
+		return expl.includes(plant.key);
 	},
 	run:function() {
 		if(this.isActive()){
