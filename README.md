@@ -65,6 +65,12 @@ This section is pretty obvious. Only one tool is there for now:
   - click this button to fill all the empty tiles of your plot
   - (don't forget to deselect the seed)
 
+### Seed List
+
+This section displays all seeds in the game, in red if you have yet to unlock it.
+**Hovering** on its name will display suggested seed mutation layout.
+**Clicking** on its name will overwrite the saved plot by the suggested layout, for future use with **Auto-plant**.
+
 ## Sacrifice garden
 
 When you sacrifice your garden, a few things will happen:

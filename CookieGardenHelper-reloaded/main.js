@@ -3,9 +3,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.0';
+		this.version = '1.1';
 		this.GameVersion = '2.042';
-		
 		
 		this.config = this.defaultConfig();
 		this.doc = {
@@ -28,6 +27,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		);
 	},
 	stop:function() { window.clearInterval(this.timerId); },
+	handleSeedClick:function(seedId) {
+		this.config.savedPlot=this.buildMutationPlotData(seedId);
+	},
 	handleChange:function(key, value) {
 		if (this.config[key].value !== undefined) {
 			this.config[key].value = value;
@@ -35,6 +37,16 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			this.config[key] = value;
 		}
 		this.save();
+	},
+	toggleSeedList:function(key) {
+		var x = this.doc.elId("toto");
+		if (x.style.display === "none") {
+			x.style.display = "block";
+			this.doc.elId('cookiegardenhelperreloadedToggleSeedList').innerHTML='-';
+		} else {
+			x.style.display = "none";
+			this.doc.elId('cookiegardenhelperreloadedToggleSeedList').innerHTML='+';
+		}
 	},
 	handleToggle:function(key) {
 		this.config[key] = !this.config[key];
@@ -56,6 +68,11 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			let content = this.buildSavedPlot();
 			Game.tooltip.draw(element, window.escape(content));
 		}
+	},
+	handleMouseoutSeedList:function(element) { Game.tooltip.shouldHide=1; },
+	handleMouseoverSeedList:function(element,seedId) {
+		let content = this.buildMutationPlot(seedId);
+		Game.tooltip.draw(element, window.escape(content));
 	},
 	
 	//Menu Stuff
@@ -79,15 +96,27 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		  display: table;
 		  clear: both;
 		}
+		.cookieGardenHelperReloadedSmallSubPanel {
+		  float: left;
+		  width: 20%;
+		}
 		.cookieGardenHelperReloadedPanel {
 		  float: left;
 		  width: 25%;
 		}
-		.cookieGardenHelperReloadedBigPanel {
+		.cookieGardenHelperReloadedSmallPanel {
+		  float: left;
+		  width: 18%;
+		}
+		.cookieGardenHelperReloadedSubPanel {
 		  float: left;
 		  width: 50%;
 		}
-		.cookieGardenHelperReloadedSubPanel {
+		.cookieGardenHelperReloadedSeedPanel {
+		  float: left;
+		  width: 100%;
+		}
+		.cookieGardenHelperReloadedBigPanel {
 		  float: left;
 		  width: 50%;
 		}
@@ -143,6 +172,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		#cookieGardenHelperReloadedTooltip .gardenTileIcon {
 		  position: inherit;
 		}
+		#cookieGardenHelperReloadedTooltip .gardenTileIcon.off {
+		  opacity: 20%;
+		}
 		#cookieGardenHelperReloaded .warning {
 			padding: 1em;
 			font-size: 1.5em;
@@ -159,6 +191,18 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}
 		#cookieGardenHelperReloaded .warning .closeWarning:hover {
 			color: black;
+		}
+		.cookieGardenHelperReloadedGardenSeed {
+		    pointer-events: none;
+			transform: translate(0,0);
+			display: inline-block;
+			/* position: absolute; */
+			left: -4px;
+			top: -4px;
+			width: 48px;
+			height: 48px;
+			background: url(img/gardenPlants.png?v=2.042);
+			vertical-align: middle;
 		}
 		`;
 	},
@@ -340,6 +384,11 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					'Plant the selected seed on all empty tiles')}
 				  </p>
 				</div>
+				<div class="cookieGardenHelperReloadedSeedPanel" id="seedList">
+				  <h2>Seed List ${this.button('ToggleSeedList', '+', 
+					'Display or hide seed list')}</h2>
+				  <p id="toto" style="display:none">${this.getSeedListDisplay()}</p>
+				</div>
 			  </div>
 			</div>`);
 
@@ -377,6 +426,118 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		this.doc.elId('cookiegardenhelperreloadedPlotIsSaved').onmouseover = (event) => {
 			this.handleMouseoverPlotIsSaved(this);
 		}
+		this.doc.elId('cookiegardenhelperreloadedToggleSeedList').onclick = (event) => {
+			this.toggleSeedList(this);
+		}
+	},
+	getSeedListDisplay:function() {
+		str = "";
+		
+		if(this.isActive()){
+			for (let i = 1; i <= this.minigame().plantsById.length; i++){
+				var p = this.getPlant(i)
+				str += `<div class="cookieGardenHelperReloadedSmallSubPanel seedListItem" id="plant-${i}">
+					<div id="gardenSeedIcon-${i}" class="cookieGardenHelperReloadedGardenSeed shadowFilter" style="background-position:0px ${this.getSeedIconY(i)}px;"></div>
+					<div style="display:inline-block;${p.unlocked==0 ? 'color:red;' : ''}">${i} - ${p.name}</div>
+				</div>`;
+			}
+		}
+		
+		return str;
+	},
+	setSeedListTooltips:function() {
+		this.doc.qSelAll('.seedListItem').forEach((d) => {
+		  d.onclick = (event) => {
+			this.handleSeedClick(parseInt(d.id.split('-')[1]));
+		  };
+
+		  d.onmouseout = (event) => {
+		  	this.handleMouseoutSeedList(this);
+		  }
+		  d.onmouseover = (event) => {
+		  	this.handleMouseoverSeedList(this, parseInt(d.id.split('-')[1]));
+		  }
+		});
+	},
+	isMutationPlace:function(parents,x,y){
+		if(this.isActive()){
+			var l = Game.Objects['Farm'].level
+			
+			//Level 1
+			if(l==1 && parents==1){
+				if(x==2 && (y==2||y==3)){ return 0 }
+			}
+			else if(l==1 && parents==2){
+				if(x==2 && y==2){ return 0 }
+				else if(x==2 && y==3){ return 1 }
+			}
+			//Level 2
+			else if(l==2 && parents==1){
+				if(x==3 && (y==2||y==3)){ return 0 }
+			}
+			else if(l==2 && parents==2){
+				if(x==3 && y==2){ return 0 }
+				else if(x==3 && y==3){ return 1 }
+			}
+			//Level 3
+			else if(l==3 && parents==1){
+				if(y==3 && (x==2||x==3||x==4)){ return 0 }
+			}
+			else if(l==3 && parents==2){
+				if(y==3 && (x==2||x==4)){ return 0 }
+				else if(y==3 && x==3){ return 0 }
+			}
+			//Level 4
+			else if(l==4 && parents==1){
+				if(y==3 && (x==1||x==2||x==3||x==4)){ return 0 }
+			}
+			else if(l==4 && parents==2){
+				if(y==3 && (x==2||x==3)){ return 0 }
+				else if(y==3 && (x==1||x==4)){ return 0 }
+			}
+			//Level 5
+			else if(l==5 && parents==1){
+				if((x==1 && y==1) || (x==1 && y==4) || (x==4 && y==1) || (x==4 && y==4) || (x==3 && y==2) || (x==2 && y==3)){ return 0 }
+			}
+			else if(l==5 && parents==2){
+				if((x==1 && y==1) || (x==1 && y==4) || (x==4 && y==1) || (x==4 && y==4)){ return 0 }
+				else if((x==3 && y==2) || (x==2 && y==3)){ return 1 }
+			}
+			//Level 6
+			else if(l==6 && parents==1){
+				if((x==1 && y==1) || (x==1 && y==4) || (x==2 && y==2) || (x==3 && y==4) || (x==4 && y==2) || (x==5 && y==1) || (x==5 && y==4)){ return 0 }
+			}
+			else if(l==6 && parents==2){
+				if((x==2 && y==3) || (x==3 && y==1) || (x==5 && y==3)){ return 0 }
+				else if((x==1 && y==1) || (x==1 && y==3) || (x==4 && y==3) || (x==5 && y==1)){ return 1 }
+			}
+			//Level 7
+			else if(l==7 && parents==1){
+				if((x==2 || x==5) && (y==1 || y==2 || y==4 || y==5)){ return 0 }
+			}
+			else if(l==7 && parents==2){
+				if((x==2 || x==5) && (y==2 || y==5)){ return 0 }
+				else if((x==1 || x==4) && (y==2 || y==5)){ return 1 }
+			}
+			//Level 8
+			else if(l==8 && parents==1){
+				if((x==1 || x==4) && (y==1 || y==2 || y==4 || y==5)){ return 0 }
+			}
+			else if(l==8 && parents==2){
+				if((x==1 || x==4) && (y==1 || y==4)){ return 0 }
+				else if((x==1 || x==4) && (y==2 || y==5)){ return 1 }
+			}
+			//Level 9
+			else if(l==9 && parents==1){
+				if((x==1 || x==4) && (y==0 || y==1 || y==2 || y==4 || y==5)){ return 0 }
+			}
+			else if(l==9 && parents==2){
+				if((x==1 || x==4) && (y==0 || y==5)){ return 0 }
+				else if((x==4 && y==2) || (x==1 && y==3)){ return 0 }
+				else if((x==1 || x==4) && (y==1 || y==4)){ return 1 }
+			}
+		}
+		return -1;
 	},
 	getSeedIconY:function(seedId) { return this.getPlant(seedId).icon * -48; },
 	buildSavedPlot:function() {
@@ -389,6 +550,49 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			</div>`).join('')}
 		  </div>`).join('')}
 		</div>`;
+	},
+	buildMutationPlot:function(seedId) {
+		//console.log(seedId+"-"+this.isSeedUnlocked(seedId))
+		return `<div id="cookieGardenHelperReloadedTooltip">
+		  ${this.buildMutationPlotData(seedId).map((row) => `<div class="gardenTileRow">
+			${row.map((tile) => `<div class="tile">
+			  ${(tile[0] - 1) < 0 ? '' : `<div class="gardenTileIcon ${this.isSeedUnlocked(tile[0])?'on':'off'}"
+				style="background-position: 0 ${this.getSeedIconY(tile[0])}px;">
+			  </div>`}
+			</div>`).join('')}
+		  </div>`).join('')}
+		</div>`;
+	},
+	buildMutationPlotData:function(seedId) {
+		var m = this.getPlantParents(seedId);
+		
+		var l = Game.Objects['Farm'].level
+		if(seedId==22){
+			if(l==9){
+				return [[[21,0],[21,0],[21,0],[21,0],[21,0],[21,0]],[[21,0],[0,0],[21,0],[21,0],[0,0],[21,0]],[[21,0],[21,0],[21,0],[21,0],[21,0],[21,0]],[[21,0],[21,0],[21,0],[21,0],[21,0],[21,0]],[[21,0],[0,0],[21,0],[21,0],[0,0],[21,0]],[[21,0],[21,0],[21,0],[21,0],[21,0],[21,0]]];
+			}
+			if(l>=3){
+				return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[21,0],[21,0],[21,0],[0,0]],[[0,0],[0,0],[21,0],[0,0],[21,0],[0,0]],[[0,0],[0,0],[21,0],[21,0],[21,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+			}
+			return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+		}
+		if(seedId==6 && l>=3){
+			return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[5,0],[0,0],[0,0]],[[0,0],[0,0],[5,0],[0,0],[5,0],[0,0]],[[0,0],[0,0],[0,0],[5,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+		}
+		
+		let plot = this.clone(this.minigame().plot);
+		for (let x=0; x<6; x++) {
+		  for (let y=0; y<6; y++) {
+			var mid = this.isMutationPlace(m.length,y,x);
+			plot[x][y] = [(mid>=0?m[mid]+1:0), 0];
+		  }
+		}
+		return plot;
+	},
+	isSeedUnlocked:function(seedId) { return this.getPlant(seedId).unlocked==1; },
+	getPlantParents:function(seedId) {
+		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[0,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,11],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[11,4],[22],[0,10],[7,31],[7,23]];
+		return mutations[seedId-1];
 	},
 	
 	//Garden functions
@@ -455,7 +659,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		  }
 		}
 	},
-	harvest:function(x, y){ this.minigame().harvest(x, y); },
+	harvest:function(x, y){ this.minigame().harvest(x, y, 1); },
 	fillGardenWithSelectedSeed:function(){
 		if (this.selectedSeed() > -1) {
 		  this.forEachTile((x, y) => {
@@ -501,6 +705,11 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	run:function() {
 		if(this.isActive()){
+			//Display Seed List
+			this.doc.elId('toto').textContent = '';
+			this.doc.elId('toto').innerHTML = this.getSeedListDisplay();
+			this.setSeedListTooltips();
+			
 			// sacrifice garden
 			if(!this.oldConvert){
 				this.oldConvert = this.minigame().convert;
