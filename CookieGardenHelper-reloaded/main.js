@@ -527,11 +527,11 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				if((x==1 || x==4) && (y==1 || y==4)){ return 0 }
 				else if((x==1 || x==4) && (y==2 || y==5)){ return 1 }
 			}
-			//Level 9
-			else if(l==9 && parents==1){
+			//Level 9+
+			else if(l>=9 && parents==1){
 				if((x==1 || x==4) && (y==0 || y==1 || y==2 || y==4 || y==5)){ return 0 }
 			}
-			else if(l==9 && parents==2){
+			else if(l>=9 && parents==2){
 				if((x==1 || x==4) && (y==0 || y==5)){ return 0 }
 				else if((x==4 && y==2) || (x==1 && y==3)){ return 0 }
 				else if((x==1 || x==4) && (y==1 || y==4)){ return 1 }
