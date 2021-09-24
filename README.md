@@ -4,7 +4,7 @@ Automate your garden in Cookie Clicker
 
 This is the Steam version of cookie-garden-helper (https://github.com/yannprada/cookie-garden-helper)
 
-## How to use
+## How to install
 
 Import the CookieGardenHelper-reloaded folder in `<steam>\SteamApps\common\Cookie Clicker\resources\app\mods\local`
 There should only be info.txt and main.js in that folder, no sub-folders
@@ -89,3 +89,23 @@ The rest of your configuration will remain.
 ## Screenshot
 
 ![Screenshot - UI of the mod cookie-garden-helper](/img/cookie-garden-helper.png?raw=true "UI")
+
+## Issues
+
+If you have any issues, you can either create an issue in this git repo, or ping me on [Reddit](https://old.reddit.com/r/CookieClicker/comments/phxdge/garden_helper_for_steam_version/)
+
+## FAQ
+
+**It's loaded and there but never seems to do anything?**
+
+    In a few words:
+      1. You need to manually plant a first round of plants
+      2. You press the "Save Plot" button, when hovering on the text right next to it, you should have a tooltip with your layout (or you can press a seed in the bottom list)
+      3. After that, Auto-Plant ON should work
+
+**The readme doesnt explain well what this CPS check is or if its needed at all.**
+
+    Cps mult check is completely optional.
+    Depending on the activated check:
+      - Auto-Plant : It will only plant new seed if the bonus CpS is below the given value
+      - Auto-Harvest : It will only harvest if the bonus Cps is above the given value
