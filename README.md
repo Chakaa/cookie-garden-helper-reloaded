@@ -96,16 +96,20 @@ If you have any issues, you can either create an issue in this git repo, or ping
 
 ## FAQ
 
-**It's loaded and there but never seems to do anything?**
+> It's loaded and there but never seems to do anything?
 
-    In a few words:
-      1. You need to manually plant a first round of plants
-      2. You press the "Save Plot" button, when hovering on the text right next to it, you should have a tooltip with your layout (or you can press a seed in the bottom list)
-      3. After that, Auto-Plant ON should work
+In a few words:  
+1. You need to manually plant a first round of plants  
+2. You press the "Save Plot" button, when hovering on the text right next to it, you should have a tooltip with your layout (or you can press a seed in the bottom list)  
+3. After that, Auto-Plant ON should work  
 
-**The readme doesnt explain well what this CPS check is or if its needed at all.**
+> The readme doesnt explain well what this CPS check is or if its needed at all.
 
-    Cps mult check is completely optional.
-    Depending on the activated check:
-      - Auto-Plant : It will only plant new seed if the bonus CpS is below the given value
-      - Auto-Harvest : It will only harvest if the bonus Cps is above the given value
+Cps mult check is completely optional.  
+Depending on the activated check:  
+- Auto-Plant : It will only plant new seed if the bonus CpS is below the given value  
+- Auto-Harvest : It will only harvest if the bonus Cps is above the given value
+
+> The tooltip showing the saved garden is all shuffled around
+
+You might have changed from the default zoom. Press Ctrl + 0 to revert to the normal zoom.
