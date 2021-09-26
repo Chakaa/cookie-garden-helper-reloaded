@@ -49,8 +49,11 @@ This one will work if:
 
 - the tile is empty
 - a plot has been previously saved with the button **Save plot**
+- the option **Avoid Buffs** is:
+  - **ON**, and there is no CpS multiplier from buff
+  - **OFF**
 - the option **Check CpS Mult** is:
-  - **ON**, and the current CpS multiplier is
+  - **ON**, and the current CpS multiplier in the Garden is
 below or equal to the one specified at **Maxi CpS multiplier**
   - **OFF**
 
@@ -89,6 +92,26 @@ The rest of your configuration will remain.
 ## Screenshot
 
 ![Screenshot - UI of the mod cookie-garden-helper](/img/cookie-garden-helper.png?raw=true "UI")
+
+## Changelog
+
+### 1.0
+
+`First version of the mod`
+
+### 1.1
+
+`New "Seed List" section for mutation`
+
+#### 1.1.1
+
+`Fixed recipes with wrong parents or wrong layouts`
+
+`Improved recipe for Golden Clover`
+
+### 1.2
+
+`New "Avoid Buffs" button to save some cookies when planting`
 
 ## Issues
 
