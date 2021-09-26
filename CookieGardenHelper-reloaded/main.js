@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.1';
+		this.version = '1.2';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -356,6 +356,13 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					Auto-plant
 					${this.button('autoPlant', '', '', true, this.config.autoPlant)}
 				  </h2>
+				  <p>
+					${this.button(
+					  'autoPlantAvoidBuffs', 'Avoid Buffs',
+					  'Make sure there is no buffs before planting (saving cookies)', true,
+					  this.config.autoPlantAvoidBuffs
+					)}
+				  </p>
 				  <p>
 					${this.button(
 					  'autoPlantCheckCpSMult', 'Check CpS mult',
@@ -778,6 +785,11 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		var expl = ["crumbspore","doughshroom"];
 		return expl.includes(plant.key);
 	},
+	getBuffMultCps:function(){
+		var mult = 1;
+		for (var b in Game.buffs){if(Game.buffs[b].hasOwnProperty('multCpS')){mult*=Game.buffs[b].multCpS;}}
+		return mult;
+	},
 	run:function() {
 		if(this.isActive()){
 			//Display Seed List
@@ -824,10 +836,10 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			  }
 
 			  if (this.config.autoPlant &&
-				  (!this.config.autoPlantCheckCpSMult ||
-				  this.CpSMult() <= this.config.autoPlantMaxiCpSMult.value) &&
-				  this.tileIsEmpty(x, y) &&
-				  this.config.savedPlot.length > 0
+					(!this.config.autoPlantCheckCpSMult || this.CpSMult() <= this.config.autoPlantMaxiCpSMult.value) &&
+					(!this.config.autoPlantAvoidBuffs || this.getBuffMultCps()<=1) &&
+				  	this.tileIsEmpty(x, y) &&
+				  	this.config.savedPlot.length > 0
 				) {
 				let [seedId, age] = this.config.savedPlot[y][x];
 				if (seedId > 0) {
@@ -857,6 +869,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			autoHarvestCheckCpSMultDying: false,
 			autoHarvestMiniCpSMultDying: { value: 1, min: 0 },
 			autoPlant: false,
+			autoPlantAvoidBuffs: true,
 			autoPlantCheckCpSMult: false,
 			autoPlantMaxiCpSMult: { value: 0, min: 0 },
 			savedPlot: [],
