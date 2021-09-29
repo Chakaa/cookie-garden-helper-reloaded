@@ -59,6 +59,10 @@ below or equal to the one specified at **Maxi CpS multiplier**
 
 ***Note:*** mouse over the message *Plot saved*, to see what was saved.
 
+The option **Rotate Soil** :
+  - **ON** - The soil is automatically changed to clay if there are more mature seeds than young. Or to wood chips if there are more young seeds.
+  - **OFF** - The soild will not change on its own.
+
 ### Manual tools
 
 This section is pretty obvious. Only one tool is there for now:
@@ -68,9 +72,13 @@ This section is pretty obvious. Only one tool is there for now:
   - click this button to fill all the empty tiles of your plot
   - (don't forget to deselect the seed)
 
+### Garden upgrades
+
+This section displays all garden upgrades, shows which ones were bought, or unlocked. The tooltip works and shows how to unlock the upgrade.
+
 ### Seed List
 
-This section displays all seeds in the game, in red if you have yet to unlock it.
+This section displays all seeds in the game, in orange if not unlocked yet, but possible, in red if you cannot unlock it yet (parents are not unlocked).
 
 **Hovering** on its name will display suggested seed mutation layout.
 
@@ -112,6 +120,14 @@ The rest of your configuration will remain.
 ### 1.2
 
 `New "Avoid Buffs" button to save some cookies when planting`
+
+### 1.3
+
+`New "Rotate Soil" button`
+
+`New "Garden upgrades" section`
+
+`A fix to prevent planting not unlocked seeds`
 
 ## Issues
 

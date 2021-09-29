@@ -28,6 +28,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	stop:function() { window.clearInterval(this.timerId); },
 	handleSeedClick:function(seedId) {
+		if(!this.parentsUnlocked(seedId))return;
 		this.config.savedPlot=this.buildMutationPlotData(seedId);
 	},
 	handleChange:function(key, value) {
@@ -39,7 +40,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		this.save();
 	},
 	toggleSeedList:function(key) {
-		var x = this.doc.elId("toto");
+		var x = this.doc.elId("seedListDiv");
 		if (x.style.display === "none") {
 			x.style.display = "block";
 			this.doc.elId('cookiegardenhelperreloadedToggleSeedList').innerHTML='-';
@@ -365,6 +366,13 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				  </p>
 				  <p>
 					${this.button(
+					  'autoPlantRotateSoil', 'Rotate Soil',
+					  'Use Wood chips if mostly growing, Clay otherwise', true,
+					  this.config.autoPlantRotateSoil
+					)}
+				  </p>
+				  <p>
+					${this.button(
 					  'autoPlantCheckCpSMult', 'Check CpS mult',
 					  'Check the CpS multiplier before planting (see below)', true,
 					  this.config.autoPlantCheckCpSMult
@@ -391,10 +399,14 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					'Plant the selected seed on all empty tiles')}
 				  </p>
 				</div>
+				<div class="cookieGardenHelperReloadedPanel" id="gardenUpgradesPanel">
+				  <h2>Garden upgrades</h2>
+				  <p id="upgradeListDiv" style="">${this.getUpgradeListDisplay()}</p>
+				</div>
 				<div class="cookieGardenHelperReloadedSeedPanel" id="seedList">
 				  <h2>Seed List ${this.button('ToggleSeedList', '+', 
-					'Display or hide seed list')}</h2>
-				  <p id="toto" style="display:none">${this.getSeedListDisplay()}</p>
+					'Display or hide seed list. In orange, what could be unlocked. In red, what cannot.')}</h2>
+				  <p id="seedListDiv" style="display:none">${this.getSeedListDisplay()}</p>
 				</div>
 			  </div>
 			</div>`);
@@ -437,15 +449,25 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			this.toggleSeedList(this);
 		}
 	},
+	getUpgradeListDisplay:function() {
+		str = "";
+		if(this.isActive()){
+			for(let i=470;i<=476;i++){
+				var ic = Game.UpgradesById[i].icon;
+				str += `
+				<div class="crate upgrade${Game.UpgradesById[i].bought==1?' enabled':''}" onmouseout="Game.tooltip.shouldHide=1;" onmouseover="Game.tooltip.dynamic=1;Game.tooltip.draw(this,function(){return Game.crateTooltip(Game.UpgradesById[${i}],'store');},'top');Game.tooltip.wobble();" id="upg-${i}" style="${Game.UpgradesById[i].unlocked==0?'opacity:.3;':''}width:48px;height:48px;background-image: url(img/icons.png);background-position: ${-1*ic[0]*48}px ${-1*ic[1]*48}px;"></div>`;
+			}
+		}
+		return str;
+	},
 	getSeedListDisplay:function() {
 		str = "";
-		
 		if(this.isActive()){
 			for (let i = 1; i <= this.minigame().plantsById.length; i++){
 				var p = this.getPlant(i)
 				str += `<div class="cookieGardenHelperReloadedSmallSubPanel seedListItem" id="plant-${i}">
 					<div id="gardenSeedIcon-${i}" class="cookieGardenHelperReloadedGardenSeed shadowFilter" style="background-position:0px ${this.getSeedIconY(i)}px;"></div>
-					<div style="display:inline-block;${p.unlocked==0 ? 'color:red;' : ''}">${i} - ${p.name}</div>
+					<div style="display:inline-block;${p.unlocked==1?'':(!this.parentsUnlocked(i)?'color:red;':'color:orange;')}">${i} - ${p.name}</div>
 				</div>`;
 			}
 		}
@@ -622,6 +644,13 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}
 		return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
 	},
+	parentsUnlocked:function(seedId) {
+		var parents = this.getPlantParents(seedId);
+		var p1 = parents[0]
+		var p2 = (parents.length>1?parents[1]:parents[0]);
+		
+		return this.isSeedUnlocked(p1+1) && this.isSeedUnlocked(p2+1)
+	},
 	buildMutationPlotData:function(seedId) {
 		var m = this.getPlantParents(seedId);
 		
@@ -682,6 +711,38 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	isActive:function(){ return this.minigame() !== undefined; },
 	templace:function(){
 		return 1
+	},
+	setCorrectSoil:function(){
+		var M = this.minigame();
+		if(!M.freeze){
+			var y = 0;
+			var m = 0;
+			for (let x=0; x<6; x++) {
+				for (let y=0; y<6; y++) {
+					if(!this.tileIsEmpty(x, y)){
+						let tile = this.getTile(x, y);
+						let stage = this.getPlantStage(tile);
+						if(stage=='young'){
+							y++;
+						}else{
+							m++;
+						}
+					}
+				}
+			}
+			
+			var clay = 2;
+			var woodchips = 4;
+			var targetSoil = y>m?woodchips:clay;
+			
+			if( M.soil!=targetSoil && M.parent.amount>=M.soilsById[targetSoil].req && M.nextSoil<Date.now() ){
+				M.nextSoil=Date.now()+(Game.Has('Turbo-charged soil')?1:(1000*60*10));
+				M.toCompute=true;
+				M.soil=targetSoil;
+				M.computeStepT();
+				for (var i in M.soils){var it=M.soils[i];if (it.id==M.soil){l('gardenSoil-'+it.id).classList.add('on');}else{l('gardenSoil-'+it.id).classList.remove('on');}}
+			}
+		}
 	},
 	CpSMult:function(){
 		var res = 1
@@ -793,9 +854,13 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	run:function() {
 		if(this.isActive()){
 			//Display Seed List
-			this.doc.elId('toto').textContent = '';
-			this.doc.elId('toto').innerHTML = this.getSeedListDisplay();
+			this.doc.elId('seedListDiv').textContent = '';
+			this.doc.elId('seedListDiv').innerHTML = this.getSeedListDisplay();
 			this.setSeedListTooltips();
+
+			//Display Upgrades
+			this.doc.elId('upgradeListDiv').textContent = '';
+			this.doc.elId('upgradeListDiv').innerHTML = this.getUpgradeListDisplay();
 			
 			// sacrifice garden
 			if(!this.oldConvert){
@@ -846,6 +911,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					this.plantSeed(seedId - 1, x, y);
 				}
 			  }
+			  if (this.config.autoPlantRotateSoil){
+				  this.setCorrectSoil();
+			  }
 			});
 		}
 	},
@@ -870,6 +938,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			autoHarvestMiniCpSMultDying: { value: 1, min: 0 },
 			autoPlant: false,
 			autoPlantAvoidBuffs: true,
+			autoPlantRotateSoil: false,
 			autoPlantCheckCpSMult: false,
 			autoPlantMaxiCpSMult: { value: 0, min: 0 },
 			savedPlot: [],
