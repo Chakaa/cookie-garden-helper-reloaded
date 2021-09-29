@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.2';
+		this.version = '1.3';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -16,8 +16,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		this.build();
 		this.start();
 		
-		if (Game.prefs.popups) Game.Popup(this.name + ' loaded!');
-		else Game.Notify(this.name + ' loaded!', '', '', 1, 1);
+		if (Game.prefs.popups) Game.Popup(this.name + ' v' + this.version + ' loaded!');
+		else Game.Notify(this.name + ' v' + this.version + ' loaded!', '', '', 1, 1);
 	},
 	//Main
 	start:function() {
