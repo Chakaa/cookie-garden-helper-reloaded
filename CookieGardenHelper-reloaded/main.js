@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.3';
+		this.version = '1.4';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -284,31 +284,19 @@ Game.registerMod("cookiegardenhelperreloaded",{
 						this.config.autoHarvestAvoidImmortals
 					  )}
 					</p>
-				  </div>
-				  <div class="cookieGardenHelperReloadedSubPanel">
-					<h3>young</h3>
-					<p>
-					  ${this.button(
-						'autoHarvestWeeds', 'Remove weeds',
-						'Remove weeds as soon as they appear', true,
-						this.config.autoHarvestWeeds
-					  )}
-					</p>
-					<p>
-					  ${this.button(
-						'autoHarvestCleanGarden', 'Clean Garden',
-						'Only allow saved and unlocked seeds', true,
-						this.config.autoHarvestCleanGarden
-					  )}
-					</p>
-				  </div>
-				  <div class="cookieGardenHelperReloadedSubPanel">
 					<h3>mature</h3>
 					<p>
 					  ${this.button(
 						'autoHarvestNewSeeds', 'New seeds',
 						'Harvest new seeds as soon as they are mature', true,
 						this.config.autoHarvestNewSeeds
+					  )}
+					</p>
+					<p>
+					  ${this.button(
+						'autoHarvestMatured', 'Matured seeds',
+						'Harvest matured seeds as soon as they are mature', true,
+						this.config.autoHarvestMatured
 					  )}
 					</p>
 					<p>
@@ -327,6 +315,21 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					</p>
 				  </div>
 				  <div class="cookieGardenHelperReloadedSubPanel">
+					<h3>young</h3>
+					<p>
+					  ${this.button(
+						'autoHarvestWeeds', 'Remove weeds',
+						'Remove weeds as soon as they appear', true,
+						this.config.autoHarvestWeeds
+					  )}
+					</p>
+					<p>
+					  ${this.button(
+						'autoHarvestCleanGarden', 'Clean Garden',
+						'Only allow saved and unlocked seeds', true,
+						this.config.autoHarvestCleanGarden
+					  )}
+					</p>
 					<h3>dying</h3>
 					<p>
 					  ${this.button(
@@ -830,6 +833,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		  this.harvest(x, y);
 		} else if (this.config.autoHarvestCheckCpSMult && this.CpSMult() >= this.config.autoHarvestMiniCpSMult.value) {
 		  this.harvest(x, y);
+		}else if(this.config.autoHarvestMatured){
+		  this.harvest(x, y);
 		}
 	},
 	handleDying:function(plant, x, y){
@@ -927,6 +932,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			timerInterval: 1000,
 			autoHarvest: false,
 			autoHarvestNewSeeds: true,
+			autoHarvestMatured: false,
 			autoHarvestAvoidImmortals: true,
 			autoHarvestWeeds: true,
 			autoHarvestCleanGarden: false,
