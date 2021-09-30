@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4';
+		this.version = '1.4.1';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -649,6 +649,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	parentsUnlocked:function(seedId) {
 		var parents = this.getPlantParents(seedId);
+		if(parents.length<=0){ return true; }
 		var p1 = parents[0]
 		var p2 = (parents.length>1?parents[1]:parents[0]);
 		
