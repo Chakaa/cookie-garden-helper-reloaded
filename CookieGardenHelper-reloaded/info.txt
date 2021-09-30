@@ -3,7 +3,7 @@
 	"ID": "cookiegardenhelperreloaded",
 	"Author": "chakaa",
 	"Description": "Automate your garden in Cookie Clicker - reloaded",
-	"ModVersion": 1,
+	"ModVersion": 1.4.1,
 	"GameVersion": 2.042,
 	"Date": "01/09/2021",
 	"Dependencies": [],
