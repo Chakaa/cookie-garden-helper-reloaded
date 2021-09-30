@@ -138,6 +138,10 @@ The rest of your configuration will remain.
 
 `Fixed blocking issue starting 1.3`
 
+#### 1.4.2
+
+`Fixed blocking issue at loading`
+
 ## Issues
 
 If you have any issues, you can either create an issue in this git repo, or ping me on [Reddit](https://old.reddit.com/r/CookieClicker/comments/phxdge/garden_helper_for_steam_version/)
