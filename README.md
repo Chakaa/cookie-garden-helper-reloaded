@@ -142,6 +142,10 @@ The rest of your configuration will remain.
 
 `Fixed blocking issue at loading`
 
+#### 1.4.3
+
+`Fixed few wrong parents, even if the tooltip was ok`
+
 ## Issues
 
 If you have any issues, you can either create an issue in this git repo, or ping me on [Reddit](https://old.reddit.com/r/CookieClicker/comments/phxdge/garden_helper_for_steam_version/)

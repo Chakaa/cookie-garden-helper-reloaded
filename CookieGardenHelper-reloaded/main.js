@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.2';
+		this.version = '1.4.3';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -597,8 +597,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	horizontalPlots:function(parents) {
 		var l = Game.Objects['Farm'].level
-		var p1 = parents[0]
-		var p2 = (parents.length>1?parents[1]:parents[0]);
+		var p1 = parents[0]+1
+		var p2 = (parents.length>1?parents[1]:parents[0])+1;
 		if(l>=8){
 			return [
 				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
@@ -706,7 +706,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	isSeedUnlocked:function(seedId) { return this.getPlant(seedId).unlocked==1; },
 	getPlantParents:function(seedId) {
-		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[2,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,11],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[11,4],[8],[0,10],[32,8],[7,23]];
+		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[2,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,11],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[11,4],[7],[0,10],[31,7],[7,23]];
 		return mutations[seedId-1];
 	},
 	
