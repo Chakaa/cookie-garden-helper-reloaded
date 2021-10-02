@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.3';
+		this.version = '1.4.4';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -517,7 +517,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			else if(l==3 && parents==2){
 				if(y==3 && (x==2||x==4)){ return 0 }
-				else if(y==3 && x==3){ return 0 }
+				else if(y==3 && x==3){ return 1 }
 			}
 			//Level 4
 			else if(l==4 && parents==1){
@@ -525,7 +525,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			else if(l==4 && parents==2){
 				if(y==3 && (x==2||x==3)){ return 0 }
-				else if(y==3 && (x==1||x==4)){ return 0 }
+				else if(y==3 && (x==1||x==4)){ return 1 }
 			}
 			//Level 5
 			else if(l==5 && parents==1){
