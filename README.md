@@ -106,49 +106,41 @@ The rest of your configuration will remain.
 
 ### 1.0
 
-`First version of the mod`
+>`First version of the mod`
 
 ### 1.1
 
-`New "Seed List" section for mutation`
-
-#### 1.1.1
-
-`Fixed recipes with wrong parents or wrong layouts`
-
-`Improved recipe for Golden Clover`
+>`New "Seed List" section for mutation`
+>
+>1.1.1: `Fixed recipes with wrong parents or wrong layouts`
+>
+>1.1.1: `Improved recipe for Golden Clover`
 
 ### 1.2
 
-`New "Avoid Buffs" button to save some cookies when planting`
+>`New "Avoid Buffs" button to save some cookies when planting`
 
 ### 1.3
 
-`New "Rotate Soil" button`
-
-`New "Garden upgrades" section`
-
-`A fix to prevent planting not unlocked seeds`
+>`New "Rotate Soil" button`
+>
+>`New "Garden upgrades" section`
+>
+>`A fix to prevent planting not unlocked seeds`
 
 ### 1.4
 
-`New "Matured seeds" button`
-
-#### 1.4.1
-
-`Fixed blocking issue starting 1.3`
-
-#### 1.4.2
-
-`Fixed blocking issue at loading`
-
-#### 1.4.3
-
-`Fixed few wrong parents, even if the tooltip was ok`
-
-#### 1.4.4
-
-`Issue of parent seed selection for Farm levels 3 and 4`
+>`New "Matured seeds" button`
+>
+>1.4.1: `Fixed blocking issue starting 1.3`
+>
+>1.4.2: `Fixed blocking issue at loading`
+>
+>1.4.3: `Fixed few wrong parents, even if the tooltip was ok`
+>
+>1.4.4: `Issue of parent seed selection for Farm levels 3 and 4`
+>
+>1.4.5: `Improved the golden clover layout`
 
 ## Issues
 
