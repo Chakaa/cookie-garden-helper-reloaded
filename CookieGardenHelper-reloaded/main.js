@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.6';
+		this.version = '1.4.6a';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -850,7 +850,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	handleMature:function(plant, x, y){
 		if (!plant.unlocked && this.config.autoHarvestNewSeeds) {
 		  this.harvest(x, y);
-		} else if (this.config.autoHarvestCheckCpSMult && this.CpSMult() >= this.config.autoHarvestMiniCpSMult.value) {
+		} else if (this.isCpsBonus(plant) && this.config.autoHarvestCheckCpSMult && this.CpSMult() >= this.config.autoHarvestMiniCpSMult.value) {
 		  this.harvest(x, y);
 		}else if(this.config.autoHarvestMatured){
 		  this.harvest(x, y);
@@ -866,9 +866,14 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}
 	},
 	isExplodable:function(plant){
-		//This plants are meant to let explode, rather than harvested.
+		//These plants are meant to let explode, rather than harvested.
 		var expl = ["crumbspore","doughshroom"];
 		return expl.includes(plant.key);
+	},
+	isCpsBonus:function(plant){
+		//These plants give bonus CpS when harvested.
+		var cpsbonus = ["bakeberry","chocoroot","whiteChocoroot","queenbeet","duketater"];
+		return cpsbonus.includes(plant.key);
 	},
 	getBuffMultCps:function(){
 		var mult = 1;
