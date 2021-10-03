@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.5';
+		this.version = '1.4.6';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -40,7 +40,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		this.save();
 	},
 	toggleSeedList:function(key) {
-		var x = this.doc.elId("seedListDiv");
+		var x = this.doc.elId("cghrSeedListDiv");
 		if (x.style.display === "none") {
 			x.style.display = "block";
 			this.doc.elId('cookiegardenhelperreloadedToggleSeedList').innerHTML='-';
@@ -404,12 +404,12 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				</div>
 				<div class="cookieGardenHelperReloadedPanel" id="gardenUpgradesPanel">
 				  <h2>Garden upgrades</h2>
-				  <p id="upgradeListDiv" style="">${this.getUpgradeListDisplay()}</p>
+				  <p id="cghrUpgradeListDiv" style=""></p>
 				</div>
 				<div class="cookieGardenHelperReloadedSeedPanel" id="seedList">
 				  <h2>Seed List ${this.button('ToggleSeedList', '+', 
 					'Display or hide seed list. In orange, what could be unlocked. In red, what cannot.')}</h2>
-				  <p id="seedListDiv" style="display:none">${this.getSeedListDisplay()}</p>
+				  <p id="cghrSeedListDiv" style="display:none"></p>
 				</div>
 			  </div>
 			</div>`);
@@ -878,13 +878,13 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	run:function() {
 		if(this.isActive()){
 			//Display Seed List
-			this.doc.elId('seedListDiv').textContent = '';
-			this.doc.elId('seedListDiv').innerHTML = this.getSeedListDisplay();
+			this.doc.elId('cghrSeedListDiv').textContent = '';
+			this.doc.elId('cghrSeedListDiv').innerHTML = this.getSeedListDisplay();
 			this.setSeedListTooltips();
 
 			//Display Upgrades
-			this.doc.elId('upgradeListDiv').textContent = '';
-			this.doc.elId('upgradeListDiv').innerHTML = this.getUpgradeListDisplay();
+			this.doc.elId('cghrUpgradeListDiv').textContent = '';
+			this.doc.elId('cghrUpgradeListDiv').innerHTML = this.getUpgradeListDisplay();
 			
 			// sacrifice garden
 			if(!this.oldConvert){

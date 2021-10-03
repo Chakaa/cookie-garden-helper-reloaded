@@ -141,6 +141,8 @@ The rest of your configuration will remain.
 >1.4.4: `Issue of parent seed selection for Farm levels 3 and 4`
 >
 >1.4.5: `Improved the golden clover layout`
+>
+>1.4.6: `Fixed a conflict when CCSE was installed`
 
 ## Issues
 
