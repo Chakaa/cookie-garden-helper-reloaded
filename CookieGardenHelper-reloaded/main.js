@@ -858,7 +858,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	handleDying:function(plant, x, y){
 		if(!this.isExplodable(plant)){
-			if (this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
+			if (this.isCpsBonus(plant) && this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
 			this.harvest(x, y);
 			} else if (this.config.autoHarvestDying && this.secondsBeforeNextTick() <= this.config.autoHarvestDyingSeconds) {
 			this.harvest(x, y);
