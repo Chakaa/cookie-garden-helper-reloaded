@@ -253,7 +253,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			this.doc.elId('cookieGardenHelperReloaded').remove();
 		};
 	},
-	readmeLink:function() { return 'https://github.com/Chakaa/cookie-garden-helper-reloaded/blob/master/README.md#how-it-works'; },
+	readmeLink:function() { return 'https://github.com/erbkaiser/cookie-garden-helper-reloaded/blob/master/README.md#how-it-works'; },
 	
 	build:function() {
 		if(	l("cookieGardenHelperReloadedProductButton") )
@@ -326,7 +326,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					<p>
 					  ${this.button(
 						'autoHarvestCleanGarden', 'Clean Garden',
-						'Only allow saved and unlocked seeds', true,
+						'Only allow saved and new seeds', true,
 						this.config.autoHarvestCleanGarden
 					  )}
 					</p>
@@ -370,7 +370,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				  <p>
 					${this.button(
 					  'autoPlantRotateSoil', 'Rotate Soil',
-					  'Use Wood chips if mostly growing, Clay otherwise', true,
+					  'Use Fertilizer if mostly growing, Clay otherwise (maximize effects)', true,
 					  this.config.autoPlantRotateSoil
 					)}
 				  </p>
@@ -754,8 +754,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			
 			var clay = 2;
-			var woodchips = 4;
-			var targetSoil = y>m?woodchips:clay;
+			var fertilizer = 1;
+			var targetSoil = y>m?fertilizer:clay;
 			
 			if( M.soil!=targetSoil && M.parent.amount>=M.soilsById[targetSoil].req && M.nextSoil<Date.now() ){
 				M.nextSoil=Date.now()+(Game.Has('Turbo-charged soil')?1:(1000*60*10));

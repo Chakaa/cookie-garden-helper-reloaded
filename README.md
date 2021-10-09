@@ -29,20 +29,20 @@ the conditions when the plant will be harvested:
 - young:
   - if it is a weed, and the option **Remove weeds** is **ON**
   - if the option **Clean garden** is **ON**, the corresponding saved slot is
-  empty and the plant is already unlocked
+  empty and the plant seed is already unlocked
   - if the option **Clean garden** is **ON**, the corresponding saved slot is
-  not empty but the young plant don't match
+  not empty, but the young plant is already unlocked
 - mature:
   - if it is a new seed, and the option **New seeds** is **ON**
-  - if the option **Check CpS Mult** is **ON**, and the current CpS multiplier
-  is above or equal to the one specified at **Mini CpS multiplier**
+  - if the option **Check CpS Mult** is **ON**, the plant gives bonus CpS on harvest, 
+  and the current CpS multiplier is above or equal to the one specified at **Mini CpS multiplier**
   - or simply if the option **Matured seeds** is **ON** (it will not wait for it to be dying)
 - dying:
-  - if the option **Check CpS Mult** is **ON**, and the current CpS
-  multiplier is above or equal to the one specified at
-**Mini CpS multiplier**
   - if the plant is dying, the last tick is 5 seconds from expiring,
   and the option **Dying plants** is **ON**
+  - if the plant is dying, the option **Check CpS Mult** is **ON**, 
+  the plant gives bonus CpS on harvest, and the current CpS multiplier is above or equal to 
+  the one specified at **Mini CpS multiplier**
 
 ### Auto-plant
 
@@ -61,8 +61,8 @@ below or equal to the one specified at **Maxi CpS multiplier**
 ***Note:*** mouse over the message *Plot saved*, to see what was saved.
 
 The option **Rotate Soil** :
-  - **ON** - The soil is automatically changed to clay if there are more mature seeds than young. Or to wood chips if there are more young seeds.
-  - **OFF** - The soild will not change on its own.
+  - **ON** - The soil is automatically changed to clay if there are more mature seeds than young. Or to fertilizer if there are more young seeds. This does not require **Auto-plant** to be **ON**.
+  - **OFF** - The soil will not change on its own.
 
 ### Manual tools
 
@@ -112,6 +112,8 @@ The rest of your configuration will remain.
 
 >`New "Seed List" section for mutation`
 >
+>`Added an explodable category, skipping harvest`
+>
 >1.1.1: `Fixed recipes with wrong parents or wrong layouts`
 >
 >1.1.1: `Improved recipe for Golden Clover`
@@ -144,26 +146,37 @@ The rest of your configuration will remain.
 >
 >1.4.6: `Fixed a conflict when CCSE was installed`
 
+### Edits
+>`Use fertilizer instead of wood chips in the auto soil rotation`
+>
+>`Stay on fertilizer until plant mature stage`
+>
+>`Add CpS Bonus category so that only plants with bonus CpS are harvested early`
+>
+>`Clarified some things in this readme`
+
 ## Issues
 
 If you have any issues, you can either create an issue in this git repo, or ping me on [Reddit](https://old.reddit.com/r/CookieClicker/comments/phxdge/garden_helper_for_steam_version/)
 
 ## FAQ
 
-> It's loaded and there but never seems to do anything?
+> It's loaded and the CGHR button is there, but it never seems to do anything?
 
-In a few words:  
-1. You need to manually plant a first round of plants  
-2. You press the "Save Plot" button, when hovering on the text right next to it, you should have a tooltip with your layout (or you can press a seed in the bottom list)  
-3. After that, Auto-Plant ON should work  
+Auto-plant does nothing if it doesn't have a saved plot.
+In other few words:  
+1. You need to manually plant a first round of plants
+2. You need to press the **Save Plot** button. When hovering on the text right next to it, you should have a tooltip with your layout
+3. Alternatively, you can directly select a seed from the Seed List.
+4. After that, **Auto-Plant: ON** should work  
 
-> The readme doesnt explain well what this CPS check is or if its needed at all.
+> The readme doesn't explain well what the CpS check is, or if it's needed at all
 
-Cps mult check is completely optional.  
+The CpS mult check is completely optional.  
 Depending on the activated check:  
-- Auto-Plant : It will only plant new seed if the bonus CpS is below the given value  
-- Auto-Harvest : It will only harvest if the bonus Cps is above the given value
+- **Auto-plant** : It will only plant new seed if the bonus CpS is *below* the given value. A value of **0** is identical to the **Avoid Buffs** check, no bonus CpS, a value of **0.5** means only planting during a Clot, a value of **1** means only planting when there is no Frenzy or other boost active, etc.
+- **Auto-harvest** : It will only harvest if the bonus CpS is *above* the given value. A value of **1** means never harvest during a Clot or other malus, a value **7** means only harvest during a Frenzy, etc.
 
-> The tooltip showing the saved garden is all shuffled around
+> The tooltip showing the saved plot is all shuffled around
 
 You might have changed from the default zoom. Press Ctrl + 0 to revert to the normal zoom.
