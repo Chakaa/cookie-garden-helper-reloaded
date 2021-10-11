@@ -11,10 +11,10 @@ There should only be info.txt and main.js in that folder, no sub-folders
 
 ## How it works
 
-To begin, click the button ***CGHR***, at the bottom of your
+To begin, click the button ***CGHR*** at the bottom of your
 garden / farms. There, you can configure how you would like the mod to operate.
 
-The mod loop through each unlocked tile, then tries to auto-harvest
+The mod loops through each unlocked tile, then tries to auto-harvest
 or auto-plant, depending on what is activated.
 
 ### Auto-harvest
@@ -37,19 +37,20 @@ and the conditions when the plant will be harvested:
   - if it is a new seed, and the option **New seeds** is **ON**
   - if the option **Check CpS Mult** is **ON**, the plant gives bonus CpS on harvest, 
   and the current CpS multiplier is above or equal to the one specified at **Mini CpS multiplier**
-  - or simply if the option **Matured seeds** is **ON**: it will not wait for the plant to be dying.
-  This prevents getting the CpS bonus from letting plants like Crumbspore explode!
+  - if the option **Matured seeds** is **ON**: all plants will be harvested as soon as they are mature
+  
+  ***Note:*** Auto-harvesting all mature seeds prevents getting the CpS bonus from letting plants like Crumbspore explode!
   
 - dying:
-  - if the plant is dying, the last tick is 5 seconds from expiring, 
-  and the option **Dying plants** is **ON**
   - if the plant is dying, the option **Check CpS Mult** is **ON**, 
   the plant gives bonus CpS on harvest, and the current CpS multiplier is above or equal to 
   the one specified at **Mini CpS multiplier**
+  - if the plant is dying, the last tick is 5 seconds from expiring, 
+  and the option **Dying plants** is **ON**
 
 ### Auto-plant
 
-This one will work if:
+It will plant the saved plot if:
 
 - the tile is empty
 - a plot has been previously saved with the button **Save plot**
@@ -61,13 +62,14 @@ This one will work if:
 below or equal to the one specified at **Maxi CpS multiplier**
   - **OFF**
 
-***Note:*** mouse over the message *Plot saved*, to see what was saved.
+***Note:*** mouse over the message *Plot saved* to see what was saved.
 
 The option **Rotate Soil** :
   - **ON** - The soil is set to fertilizer if there are more young seeds than mature, 
   and to clay otherwise. This optimizes the garden effects.
-  This option not require **Auto-plant** to be **ON**.
   - **OFF** - The soil will not change on its own.
+
+***Note:*** Rotate Soil does not require **Auto-plant** to be **ON**.
 
 ### Manual tools
 
@@ -83,10 +85,10 @@ The tooltip works and shows how to unlock the upgrade.
 
 ### Seed List
 
-This section displays all seeds in the game, in orange if not unlocked yet, but possible, 
-in red if you cannot unlock it yet (parents are not unlocked).
+This section displays all seeds in the game. Orange if not unlocked yet, but possible, 
+Red if you cannot unlock it yet (one or both parents are not unlocked).
 
-**Hovering** on its name will display suggested seed mutation layout.
+**Hovering** on a seed's name will display a suggested seed mutation layout.
 
 **Clicking** on its name will overwrite the saved plot by the suggested layout, for use with **Auto-plant**.
 
@@ -162,7 +164,7 @@ The rest of your configuration will remain.
 
 ## Issues
 
-If you have any issues, you can either create an issue in this git repo, or ping me on [Reddit](https://old.reddit.com/r/CookieClicker/comments/phxdge/garden_helper_for_steam_version/)
+If you have any issues, you can either create an issue in this git repo, or ping Chakaa on [Reddit](https://old.reddit.com/r/CookieClicker/comments/phxdge/garden_helper_for_steam_version/)
 
 ## FAQ
 
@@ -182,10 +184,12 @@ The CpS mult check is completely optional.
 Depending on the activated check:  
 - **Auto-plant** : It will only plant a new seed if the bonus CpS is *below* the given value. 
 A value of **0** is identical to the **Avoid Buffs** check, no bonus CpS, a value of **0.5** means 
-only planting during a Clot, a value of **1** means only planting when there is no Frenzy, etc.
+only planting during a Clot, a value of **1** means only planting when there is no buff, etc.
 - **Auto-harvest** : It will only harvest if the bonus CpS is *above* the given value. 
 A value of **1** means never harvest during a Clot or other malus, a value **7** means only harvest 
-during a Frenzy, etc. Note: Auto-harvest CpS will only harvest plants that provide a harvesting CpS bonus.
+during a Frenzy, etc.
+
+***Note:*** Auto-harvest CpS will only harvest plants that provide a harvesting CpS bonus.
 
 > The tooltip showing the saved plot is all shuffled around
 
