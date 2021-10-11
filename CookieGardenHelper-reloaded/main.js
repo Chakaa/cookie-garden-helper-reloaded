@@ -744,10 +744,10 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					if(!this.tileIsEmpty(x, y)){
 						let tile = this.getTile(x, y);
 						let stage = this.getPlantStage(tile);
-						if(stage=='young'){
-							y++;
-						}else{
+						if(stage=='mature'){
 							m++;
+						}else{
+							y++;
 						}
 					}
 				}
