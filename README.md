@@ -61,7 +61,7 @@ below or equal to the one specified at **Maxi CpS multiplier**
 ***Note:*** mouse over the message *Plot saved*, to see what was saved.
 
 The option **Rotate Soil** :
-  - **ON** - The soil is automatically changed to clay if there are more mature seeds than young. Or to wood chips if there are more young seeds.
+  - **ON** - The soil is automatically changed to clay or wood chips if there are more mature seeds than young. Or to fertilizer if there are more young seeds.
   - **OFF** - The soild will not change on its own.
 
 ### Manual tools
@@ -143,6 +143,8 @@ The rest of your configuration will remain.
 >1.4.5: `Improved the golden clover layout`
 >
 >1.4.6: `Fixed a conflict when CCSE was installed`
+>
+>1.4.7: `Added a combo selection for soil rotation, and fixed an issue with the rotation`
 
 ## Issues
 
