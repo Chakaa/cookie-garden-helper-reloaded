@@ -65,8 +65,7 @@ below or equal to the one specified at **Maxi CpS multiplier**
 ***Note:*** mouse over the message *Plot saved* to see what was saved.
 
 The option **Rotate Soil** :
-  - **ON** - The soil is set to fertilizer if there are more young seeds than mature, 
-  and to clay otherwise. This optimizes the garden effects.
+  - **ON** - The soil is automatically changed to clay or wood chips if there are more mature seeds than young, or to fertilizer if there are more young seeds.
   - **OFF** - The soil will not change on its own.
 
 ***Note:*** Rotate Soil does not require **Auto-plant** to be **ON**.
@@ -152,11 +151,10 @@ The rest of your configuration will remain.
 >1.4.5: `Improved the golden clover layout`
 >
 >1.4.6: `Fixed a conflict when CCSE was installed`
+>
+>1.4.7: `Added a combo selection for soil rotation, and fixed an issue with the rotation`
 
 ### Edits
->`Use fertilizer instead of wood chips in the auto soil rotation`
->
->`Stay on fertilizer until plant mature stage`
 >
 >`Add CpS Bonus category so that only plants with bonus CpS are harvested early`
 >

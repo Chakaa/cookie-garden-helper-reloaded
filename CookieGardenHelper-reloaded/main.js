@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.6a';
+		this.version = '1.4.7-edit';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -225,9 +225,23 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}
 		return `<a class="btn option" name="${name}" id="${this.makeId(name)}" title="${title}">${text}</a>`;
 	},
+	customButton:function(name, text, title, active) {
+		return `<a class="toggleBtn option ${active ? '' : 'off'}" name="${name}" id="${this.makeId(name)}" title="${title}">${text}</a>`;
+	},
 	toggleButton:function(name) {
-		let btn = this.doc.qSel(`#cookieGardenHelperReloaded a.toggleBtn[name=${name}]`);
-		btn.classList.toggle('off');
+		if(name=="autoPlantRotateSoilComboName"){
+			this.setNextCombo();
+			let btn = this.doc.qSel(`#cookieGardenHelperReloaded a.toggleBtn[name=${name}]`);
+			btn.innerHTML=this.getSoilRotationCombo()[0];
+		}else{
+			let btn = this.doc.qSel(`#cookieGardenHelperReloaded a.toggleBtn[name=${name}]`);
+			btn.classList.toggle('off');
+			if(name=="autoPlantRotateSoil"){
+				let name2 = "autoPlantRotateSoilComboName"
+				let btn2 = this.doc.qSel(`#cookieGardenHelperReloaded a.toggleBtn[name=${name2}]`);
+				btn2.classList.toggle('off');
+			}
+		}
 	},
 	labelWithState:function(name, text, textActive, active) {
 		return `<span name="${name}" id="${this.makeId(name)}" class="labelWithState ${active ? 'active' : ''}"">
@@ -370,8 +384,12 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				  <p>
 					${this.button(
 					  'autoPlantRotateSoil', 'Rotate Soil',
-					  'Use Fertilizer if mostly growing, Clay otherwise (maximize effects)', true,
+					  'Rotate soil based on mature/young counts', true,
 					  this.config.autoPlantRotateSoil
+					)}
+					${this.customButton(
+					  'autoPlantRotateSoilComboName', this.getSoilRotationCombo()[0],
+					  'Cycle on possible soil rotation combos', this.config.autoPlantRotateSoil
 					)}
 				  </p>
 				  <p>
@@ -734,28 +752,45 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	templace:function(){
 		return 1
 	},
+	getSoilRotationCombo:function(){
+		//return array with
+		//	0 : current combo label
+		//	1 : most young soil
+		//	2 : most mature soil
+		//	3 : next soil combo id
+		switch (this.config.autoPlantRotateSoilCombo) {
+			case 0:
+				return ['Fertilizer/Clay',1,2,1];
+			case 1:
+				return ['Fertilizer/WoodChips',1,4,0];
+			default:
+				return ['Fertilizer/Clay Def',1,2,1];
+		}
+	},
+	setNextCombo:function(){
+		this.config.autoPlantRotateSoilCombo=this.getSoilRotationCombo()[3]
+	},
 	setCorrectSoil:function(){
 		var M = this.minigame();
 		if(!M.freeze){
-			var y = 0;
-			var m = 0;
+			var young = 0;
+			var matur = 0;
 			for (let x=0; x<6; x++) {
 				for (let y=0; y<6; y++) {
 					if(!this.tileIsEmpty(x, y)){
 						let tile = this.getTile(x, y);
 						let stage = this.getPlantStage(tile);
-						if(stage=='mature'){
-							m++;
+						if(stage=='young'){
+							young++;
 						}else{
-							y++;
+							matur++;
 						}
 					}
 				}
 			}
 			
-			var clay = 2;
-			var fertilizer = 1;
-			var targetSoil = y>m?fertilizer:clay;
+			var soilCombo = this.getSoilRotationCombo();
+			var targetSoil = young>matur?soilCombo[1]:soilCombo[2];
 			
 			if( M.soil!=targetSoil && M.parent.amount>=M.soilsById[targetSoil].req && M.nextSoil<Date.now() ){
 				M.nextSoil=Date.now()+(Game.Has('Turbo-charged soil')?1:(1000*60*10));
@@ -969,6 +1004,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			autoPlant: false,
 			autoPlantAvoidBuffs: true,
 			autoPlantRotateSoil: false,
+			autoPlantRotateSoilCombo: 0,
 			autoPlantCheckCpSMult: false,
 			autoPlantMaxiCpSMult: { value: 0, min: 0 },
 			savedPlot: [],
