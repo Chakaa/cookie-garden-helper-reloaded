@@ -6,7 +6,7 @@ This is the Steam version of cookie-garden-helper (https://github.com/yannprada/
 
 ## How to install
 
-Import the CookieGardenHelper-reloaded folder in `<steam>\SteamApps\common\Cookie Clicker\resources\app\mods\local`
+Import the CookieGardenHelper-reloaded folder to `<steam>\SteamApps\common\Cookie Clicker\resources\app\mods\local`
 There should only be info.txt and main.js in that folder, no sub-folders
 
 ## How it works
@@ -21,51 +21,51 @@ or auto-plant, depending on what is activated.
 
 First, it will check if the tile is empty.
 
-If not, it will check if the plant is immortal. If it is, 
-and the **Avoid immortals** option is **ON**, ignore this tile.
+If not, it will check if the plant is immortal. If it is, and the **Avoid immortals** option 
+is **ON**, it will ignore this tile.
 
-If not, it will compute the plant stage. Below is a list of these stages, 
+If not, it will compute the plant stage. Below is a list of these stages 
 and the conditions when the plant will be harvested:
 
 - young:
   - if it is a weed, and the option **Remove weeds** is **ON**. 
-  This option does not prevent fungi from spreading
-  - if the option **Clean garden** is **ON**, the seed is not new, 
-  or a different plant is on that tile in the saved plot
+  This option does not prevent fungi from spreading.
+  - if the option **Clean garden** is **ON** and the seed is not new, 
+  or a different plant is on the tile in the saved plot.
   
 - mature:
-  - if it is a new seed, and the option **New seeds** is **ON**
+  - if it is a new seed and the option **New seeds** is **ON**.
   - if the option **Check CpS Mult** is **ON**, the plant gives bonus CpS on harvest, 
-  and the current CpS multiplier is above or equal to the one specified at **Mini CpS multiplier**
-  - if the option **Matured seeds** is **ON**: all plants will be harvested as soon as they are mature
+  and the current CpS multiplier is above or equal to the one specified at **Mini CpS multiplier**.
+  - if the option **Matured seeds** is **ON**, all plants will be harvested as soon as they are mature
   
-  ***Note:*** Auto-harvesting all mature seeds prevents getting the CpS bonus from letting plants like Crumbspore explode!
+  ***Note:*** Auto-harvesting all mature seeds prevents getting the CpS bonus from letting plants like 
+  Crumbspore explode!
   
 - dying:
-  - if the plant is dying, the option **Check CpS Mult** is **ON**, 
-  the plant gives bonus CpS on harvest, and the current CpS multiplier is above or equal to 
-  the one specified at **Mini CpS multiplier**
-  - if the plant is dying, the last tick is 5 seconds from expiring, 
-  and the option **Dying plants** is **ON**
+  - if the plant is dying, the option **Check CpS Mult** is **ON**, the plant gives bonus CpS on harvest, 
+  and the current CpS multiplier is above or equal to   the one specified at **Mini CpS multiplier**.
+  - if the plant is dying, the last tick is 5 seconds from expiring, and the option **Dying plants** is **ON**.
 
 ### Auto-plant
 
-It will plant the saved plot if:
+This will plant the saved plot if:
 
 - the tile is empty
 - a plot has been previously saved with the button **Save plot**
 - the option **Avoid Buffs** is:
-  - **ON**, and there is no CpS multiplier from buff
-  - **OFF**
+  - **ON**, and there is no CpS multiplier from a buff.
+  - **OFF**.
 - the option **Check CpS Mult** is:
   - **ON**, and the current CpS multiplier in the Garden is
-below or equal to the one specified at **Maxi CpS multiplier**
-  - **OFF**
+below or equal to the one specified at **Maxi CpS multiplier**.
+  - **OFF**.
 
 ***Note:*** mouse over the message *Plot saved* to see what was saved.
 
 The option **Rotate Soil** :
-  - **ON** - The soil is automatically changed to clay or wood chips if there are more mature seeds than young, or to fertilizer if there are more young seeds.
+  - **ON** - The soil is automatically changed to clay or wood chips if there are more mature seeds than young, 
+  or to fertilizer if there are more young seeds.
   - **OFF** - The soil will not change on its own.
 
 ***Note:*** Rotate Soil does not require **Auto-plant** to be **ON**.
@@ -73,14 +73,14 @@ The option **Rotate Soil** :
 ### Manual tools
 
 - **Plant selected seed**:
-  - select a seed you have unlocked
-  - click this button to fill all the empty tiles of your plot, if you can afford it
-  - (don't forget to deselect the seed)
+  1) select a seed you have unlocked.
+  2) click this button to fill all the empty tiles of your plot, if you can afford it.
+  3) don't forget to deselect the seed.
 
 ### Garden upgrades
 
 This section displays all garden upgrades, shows which ones were bought, or unlocked. 
-The tooltip works and shows how to unlock the upgrade.
+The tooltip shows how to unlock the upgrade.
 
 ### Seed List
 
@@ -95,9 +95,9 @@ Red if you cannot unlock it yet (one or both parents are not unlocked).
 
 When you sacrifice your garden, a few things will happen:
 
-- your saved plot will be erased
-- the auto-harvest will be toggled OFF
-- the auto-plant will be toggled OFF
+- your saved plot will be erased.
+- the auto-harvest will be toggled **OFF**.
+- the auto-plant will be toggled **OFF**.
 
 This is to prevent planting locked seeds, as well as allowing you to verify your
 configuration before restarting automation.
