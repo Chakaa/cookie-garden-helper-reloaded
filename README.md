@@ -31,7 +31,7 @@ and the conditions when the plant will be harvested:
   - if it is a weed, and the option **Remove weeds** is **ON**. 
   This option does not prevent fungi from spreading
   - if the option **Clean garden** is **ON**, the seed is not new, 
-  and the plant is not on that tile in the saved plot
+  or a different plant is on that tile in the saved plot
   
 - mature:
   - if it is a new seed, and the option **New seeds** is **ON**
@@ -192,3 +192,9 @@ during a Frenzy, etc.
 > The tooltip showing the saved plot is all shuffled around
 
 You might have changed from the default zoom. Press Ctrl + 0 to revert to the normal zoom.
+
+> Clean garden is removing new seeds
+
+Make sure you're not switching to a saved plot from the seed list that contains a plant at 
+the spot your new seed is growing. If you want to safely swap, disable clean garden, allow 
+auto-plant to fill the remaining slots with plants, and then save the plot with the new seed included.
