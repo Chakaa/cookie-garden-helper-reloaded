@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.7-edit';
+		this.version = '1.4.8';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -27,6 +27,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		);
 	},
 	stop:function() { window.clearInterval(this.timerId); },
+	restart:function() { this.stop();this.start(); },
 	handleSeedClick:function(seedId) {
 		if(!this.parentsUnlocked(seedId))return;
 		this.config.savedPlot=this.buildMutationPlotData(seedId);
@@ -412,6 +413,15 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					${this.labelWithState('plotIsSaved', 'No saved plot', 'Plot saved',
 					  Boolean(this.config.savedPlot.length))}
 				  </p>
+				  <!--
+				  <p>
+					${this.button(
+					  'autoForceTicks', 'Force ticks',
+					  'Force grow ticks to happen frequently', true,
+					  this.config.autoForceTicks
+					)}
+				  </p>
+				  -->
 				</div>
 				<div class="cookieGardenHelperReloadedPanel" id="manualToolsPanel">
 				  <h2>Manual tools</h2>
@@ -978,6 +988,11 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			  if (this.config.autoPlantRotateSoil){
 				  this.setCorrectSoil();
 			  }
+			  if (this.config.autoForceTicks){
+				  if(this.minigame().nextStep>Date.now()){
+					  this.minigame().nextStep=Date.now()
+				  }
+			  }
 			});
 		}
 	},
@@ -1007,6 +1022,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			autoPlantRotateSoilCombo: 0,
 			autoPlantCheckCpSMult: false,
 			autoPlantMaxiCpSMult: { value: 0, min: 0 },
+			autoForceTicks: false,
 			savedPlot: [],
 		}
 		return data;
