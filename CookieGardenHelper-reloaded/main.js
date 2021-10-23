@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.7';
+		this.version = '1.4.7-edit';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -340,7 +340,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					<p>
 					  ${this.button(
 						'autoHarvestCleanGarden', 'Clean Garden',
-						'Only allow saved and unlocked seeds', true,
+						'Only allow saved and new seeds', true,
 						this.config.autoHarvestCleanGarden
 					  )}
 					</p>
@@ -885,7 +885,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	handleMature:function(plant, x, y){
 		if (!plant.unlocked && this.config.autoHarvestNewSeeds) {
 		  this.harvest(x, y);
-		} else if (this.config.autoHarvestCheckCpSMult && this.CpSMult() >= this.config.autoHarvestMiniCpSMult.value) {
+		} else if (this.isCpsBonus(plant) && this.config.autoHarvestCheckCpSMult && this.CpSMult() >= this.config.autoHarvestMiniCpSMult.value) {
 		  this.harvest(x, y);
 		}else if(this.config.autoHarvestMatured){
 		  this.harvest(x, y);
@@ -893,7 +893,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	handleDying:function(plant, x, y){
 		if(!this.isExplodable(plant)){
-			if (this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
+			if (this.isCpsBonus(plant) && this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
 			this.harvest(x, y);
 			} else if (this.config.autoHarvestDying && this.secondsBeforeNextTick() <= this.config.autoHarvestDyingSeconds) {
 			this.harvest(x, y);
@@ -901,9 +901,14 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}
 	},
 	isExplodable:function(plant){
-		//This plants are meant to let explode, rather than harvested.
+		//These plants are meant to let explode, rather than harvested.
 		var expl = ["crumbspore","doughshroom"];
 		return expl.includes(plant.key);
+	},
+	isCpsBonus:function(plant){
+		//These plants give bonus CpS when harvested.
+		var cpsbonus = ["bakeberry","chocoroot","whiteChocoroot","queenbeet","duketater"];
+		return cpsbonus.includes(plant.key);
 	},
 	getBuffMultCps:function(){
 		var mult = 1;
