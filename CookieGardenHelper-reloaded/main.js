@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.7-edit';
+		this.version = '1.4.7';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -267,7 +267,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			this.doc.elId('cookieGardenHelperReloaded').remove();
 		};
 	},
-	readmeLink:function() { return 'https://github.com/erbkaiser/cookie-garden-helper-reloaded/blob/master/README.md#how-it-works'; },
+	readmeLink:function() { return 'https://github.com/Chakaa/cookie-garden-helper-reloaded/blob/master/README.md#how-it-works'; },
 	
 	build:function() {
 		if(	l("cookieGardenHelperReloadedProductButton") )
@@ -885,7 +885,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	handleMature:function(plant, x, y){
 		if (!plant.unlocked && this.config.autoHarvestNewSeeds) {
 		  this.harvest(x, y);
-		} else if (this.isCpsBonus(plant) && this.config.autoHarvestCheckCpSMult && this.CpSMult() >= this.config.autoHarvestMiniCpSMult.value) {
+		} else if (this.config.autoHarvestCheckCpSMult && this.CpSMult() >= this.config.autoHarvestMiniCpSMult.value) {
 		  this.harvest(x, y);
 		}else if(this.config.autoHarvestMatured){
 		  this.harvest(x, y);
@@ -893,7 +893,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	handleDying:function(plant, x, y){
 		if(!this.isExplodable(plant)){
-			if (this.isCpsBonus(plant) && this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
+			if (this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
 			this.harvest(x, y);
 			} else if (this.config.autoHarvestDying && this.secondsBeforeNextTick() <= this.config.autoHarvestDyingSeconds) {
 			this.harvest(x, y);
@@ -901,14 +901,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}
 	},
 	isExplodable:function(plant){
-		//These plants are meant to let explode, rather than harvested.
+		//This plants are meant to let explode, rather than harvested.
 		var expl = ["crumbspore","doughshroom"];
 		return expl.includes(plant.key);
-	},
-	isCpsBonus:function(plant){
-		//These plants give bonus CpS when harvested.
-		var cpsbonus = ["bakeberry","chocoroot","whiteChocoroot","queenbeet","duketater"];
-		return cpsbonus.includes(plant.key);
 	},
 	getBuffMultCps:function(){
 		var mult = 1;
