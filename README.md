@@ -35,16 +35,16 @@ and the conditions when the plant will be harvested:
   
 - mature:
   - if it is a new seed and the option **New seeds** is **ON**.
-  - if the option **Check CpS Mult** is **ON**, the plant gives bonus CpS on harvest, 
-  and the current CpS multiplier is above or equal to the one specified at **Mini CpS multiplier**.
+  - if the option **Check CpS Mult** is **ON**, and the current CpS multiplier is above or equal 
+  to the one specified at **Mini CpS multiplier**.
   - if the option **Matured seeds** is **ON**, all plants will be harvested as soon as they are mature
   
   ***Note:*** Auto-harvesting all mature seeds prevents getting the CpS bonus from letting plants like 
   Crumbspore explode!
   
 - dying:
-  - if the plant is dying, the option **Check CpS Mult** is **ON**, the plant gives bonus CpS on harvest, 
-  and the current CpS multiplier is above or equal to   the one specified at **Mini CpS multiplier**.
+  - if the plant is dying, the option **Check CpS Mult** is **ON**, and the current CpS multiplier 
+  is above or equal to   the one specified at **Mini CpS multiplier**.
   - if the plant is dying, the last tick is 5 seconds from expiring, and the option **Dying plants** is **ON**.
 
 ### Auto-plant
@@ -152,11 +152,7 @@ The rest of your configuration will remain.
 >
 >1.4.6: `Fixed a conflict when CCSE was installed`
 >
->1.4.7: `Added a combo selection for soil rotation, and fixed an issue with the rotation`
-
-### Edits
->
->`Add CpS Bonus category so that only plants with bonus CpS are harvested early`
+>1.4.7: `Added a combo selection for soil rotation, and fixed an issue with the rotation
 >
 >`Clarified some things in this readme`
 
@@ -180,14 +176,12 @@ you should have a tooltip with your layout
 
 The CpS mult check is completely optional.  
 Depending on the activated check:  
-- **Auto-plant** : It will only plant a new seed if the bonus CpS is *below* the given value. 
-A value of **0** is identical to the **Avoid Buffs** check, no bonus CpS, a value of **0.5** means 
+- **Auto-plant** : It will only plant a new seed if the CpS multiplier is *below* the given value. 
+A value of **0** is identical to the **Avoid Buffs** check, no extra CpS, a value of **0.5** means 
 only planting during a Clot, a value of **1** means only planting when there is no buff, etc.
-- **Auto-harvest** : It will only harvest if the bonus CpS is *above* the given value. 
+- **Auto-harvest** : It will only harvest if the CpS multiplier is *above* the given value. 
 A value of **1** means never harvest during a Clot or other malus, a value **7** means only harvest 
 during a Frenzy, etc.
-
-***Note:*** Auto-harvest CpS will only harvest plants that provide a harvesting CpS bonus.
 
 > The tooltip showing the saved plot is all shuffled around
 
