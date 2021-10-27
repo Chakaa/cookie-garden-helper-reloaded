@@ -157,6 +157,8 @@ The rest of your configuration will remain.
 >1.4.8: `Clarified some things in this readme`
 >
 >`Added a check for bonus CpS on harvest`
+>
+>1.4.8: `Set the soil rotation after finishing processing all tiles in the plot`
 
 ## Issues
 
