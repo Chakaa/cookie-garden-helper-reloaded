@@ -158,7 +158,7 @@ The rest of your configuration will remain.
 >
 >`Added a check for bonus CpS on harvest`
 >
->1.4.8: `Set the soil rotation after finishing processing all tiles in the plot`
+>1.4.9: `Set the soil rotation after finishing processing all tiles in the plot`
 
 ## Issues
 
