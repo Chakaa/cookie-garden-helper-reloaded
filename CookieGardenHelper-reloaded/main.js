@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.8';
+		this.version = '1.4.9';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -985,15 +985,16 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					this.plantSeed(seedId - 1, x, y);
 				}
 			  }
-			  if (this.config.autoPlantRotateSoil){
-				  this.setCorrectSoil();
-			  }
-			  if (this.config.autoForceTicks){
-				  if(this.minigame().nextStep>Date.now()){
-					  this.minigame().nextStep=Date.now()
-				  }
-			  }
 			});
+
+			if (this.config.autoPlantRotateSoil){
+				this.setCorrectSoil();
+			}
+			if (this.config.autoForceTicks){
+				if(this.minigame().nextStep>Date.now()){
+					this.minigame().nextStep=Date.now()
+				}
+			}
 		}
 	},
 	//Overall functions
