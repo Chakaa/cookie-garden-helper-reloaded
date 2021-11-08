@@ -705,7 +705,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		if(seedId==22){
 			var Q = [21,0]
 			var X = [0,0]
-			if(l>=7){
+			if(l>=9){
 				return [ 
 					[Q,Q,Q,Q,Q,Q],
 					[Q,X,Q,Q,X,Q],
