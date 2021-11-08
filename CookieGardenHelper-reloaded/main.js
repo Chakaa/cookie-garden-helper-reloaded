@@ -681,10 +681,10 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			return [
 				[X,X,X,X,X,X],
 				[X,X,X,X,X,X],
+				[X,X,X,X,X,X],
 				[X,X,X,Z,Z,Z],
 				[X,X,X,X,X,X],
 				[X,X,X,Y,Y,Y],
-				[X,X,X,X,X,X],
 			];
 		}
 		return this.emptyPlot();
