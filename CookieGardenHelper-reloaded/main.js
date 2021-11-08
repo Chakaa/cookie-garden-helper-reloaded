@@ -740,7 +740,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		//Golden clover
 		if(seedId==6){
 			var C = [5,0]
-			var X = [5,0]
+			var X = [0,0]
 			if(l>=9){
 				return [	
 					[C,C,X,C,X,C],
