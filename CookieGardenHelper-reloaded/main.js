@@ -625,14 +625,14 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	emptyPlot:function() {
 		var X = [0,0]
-			return [
-				[X,X,X,X,X,X],
-				[X,X,X,X,X,X],
-				[X,X,X,X,X,X],
-				[X,X,X,X,X,X],
-				[X,X,X,X,X,X],
-				[X,X,X,X,X,X],
-			];
+		return [
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+		];
 	},
 	horizontalPlots:function(parents) {
 		var l = Game.Objects['Farm'].level
