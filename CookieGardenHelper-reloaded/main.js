@@ -663,9 +663,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			return [
 				[X,X,X,X,X,X],
 				[X,X,X,X,X,X],
-				[X,X,Z,Z,Z,Z],
+				[X,Z,Z,Z,Z,Z],
 				[X,X,X,X,X,X],
-				[X,X,Y,Y,Y,Y],
+				[X,Y,Y,Y,Y,Y],
 				[X,X,X,X,X,X],
 			];
 		}else if(l>=4){
