@@ -672,19 +672,19 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			return [
 				[X,X,X,X,X,X],
 				[X,X,X,X,X,X],
+				[X,Z,Z,Z,Z,X],
 				[X,X,X,X,X,X],
-				[X,X,Z,Z,Z,Z],
-				[X,X,X,X,X,X],
-				[X,X,Y,Y,Y,Y],
+				[X,Y,Y,Y,Y,X],
+				[X,X,X,X,X,X]
 			];
 		}else if(l>=3){
 			return [
 				[X,X,X,X,X,X],
 				[X,X,X,X,X,X],
+				[X,X,Z,Z,Z,X],
 				[X,X,X,X,X,X],
-				[X,X,X,Z,Z,Z],
-				[X,X,X,X,X,X],
-				[X,X,X,Y,Y,Y],
+				[X,X,Y,Y,Y,X],
+				[X,X,X,X,X,X]
 			];
 		}
 		return this.emptyPlot();
@@ -729,10 +729,10 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,X,X,X,X,X],
-					[X,X,X,Q,Q,Q],
-					[X,X,X,Q,X,Q],
-					[X,X,X,Q,Q,Q]
+					[X,X,Q,Q,Q,X],
+					[X,X,Q,X,Q,X],
+					[X,X,Q,Q,Q,X],
+					[X,X,X,X,X,X]
 				];
 			}
 			return this.emptyPlot();
@@ -774,61 +774,61 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			else if(l>=6){
 				return [	
 					[X,X,X,X,X,X],
-					[X,X,X,X,X,X],
 					[X,C,C,X,C,C],
 					[X,X,C,X,C,X],
 					[X,X,C,X,C,X],
-					[X,C,C,X,C,C]
+					[X,C,C,X,C,C],
+					[X,X,X,X,X,X]
 				];
 			}
 			else if(l>=5){
 				return [	
 					[X,X,X,X,X,X],
-					[X,X,X,X,X,X],
-					[X,X,C,X,C,C],
-					[X,X,C,X,C,X],
-					[X,X,C,X,C,X],
-					[X,X,C,X,C,C]
+					[X,C,X,C,C,X],
+					[X,C,X,C,X,X],
+					[X,C,X,C,X,X],
+					[X,C,X,C,C,X],
+					[X,X,X,X,X,X]
 				];
 			}
 			else if(l>=4){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,X,X,X,X,X],
-					[X,X,C,X,C,C],
-					[X,X,C,X,C,X],
-					[X,X,C,X,C,X]
+					[X,C,X,C,C,X],
+					[X,C,X,C,X,X],
+					[X,C,X,C,X,X],
+					[X,X,X,X,X,X]
 				];
 			}
 			else if(l>=3){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,X,X,X,X,X],
-					[X,X,X,C,X,C],
-					[X,X,X,C,X,C],
-					[X,X,X,C,X,C]
+					[X,X,C,X,C,X],
+					[X,X,C,X,C,X],
+					[X,X,C,X,C,X],
+					[X,X,X,X,X,X]
 				];
 			}
 			else if(l>=2){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
+					[X,X,C,X,C,X],
+					[X,X,C,X,C,X],
 					[X,X,X,X,X,X],
-					[X,X,X,X,X,X],
-					[X,X,X,C,X,C],
-					[X,X,X,C,X,C]
+					[X,X,X,X,X,X]
 				];
 			}
 			else if(l>=1){
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
+					[X,X,C,X,X,X],
+					[X,X,C,X,X,X],
 					[X,X,X,X,X,X],
-					[X,X,X,X,X,X],
-					[X,X,X,X,C,X],
-					[X,X,X,X,C,X]
+					[X,X,X,X,X,X]
 				];
 			}
 			return this.emptyPlot();
