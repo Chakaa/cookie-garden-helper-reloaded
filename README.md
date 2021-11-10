@@ -159,6 +159,8 @@ The rest of your configuration will remain.
 >`Added a check for bonus CpS on harvest`
 >
 >1.4.9: `Set the soil rotation after finishing processing all tiles in the plot`
+>
+>1.4.10: `New way to code soil setups (mrpandat)`
 
 ## Issues
 
