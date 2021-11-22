@@ -648,7 +648,16 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		var X = [0,0]
 		var Y = [p1,0]
 		var Z = [p2,0]
-		if(l>=8){
+		if(this.config.autoPlot && (l>=9)){
+			return [
+				[Y,Y,Y,Y,Y,Y],
+				[X,X,X,X,X,X],
+				[Z,Z,Z,Z,Z,Z],
+				[Z,Z,Z,Z,Z,Z],
+				[X,X,X,X,X,X],
+				[Y,Y,Y,Y,Y,Y]
+			];
+		}else if(l>=8){
 			return [
 				[X,X,X,X,X,X],
 				[Y,Y,Y,Y,Y,Y],
@@ -744,9 +753,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			return this.emptyPlot();
 		}
-		//Golden clover
-		if(seedId==6){
-			var C = [5,0]
+		//Golden clover, Shriekbulb, brown mold, Crumbspore
+		if(seedId==6 || seedId==31 || seedId==13 || seedId==24){
+			var C = [m[0] + 1,0]
 			var X = [0,0]
 			if(l>=9){
 				return [	
@@ -840,14 +849,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			return this.emptyPlot();
 		}
-		//Shriekbulb && Everdaisy : Horizontal Lines
-		if((seedId==31 && l>=3) || seedId==33){
+		//Everdaisy, Ichorpuff : Horizontal Lines
+		if((seedId==33) || (this.config.autoPlot && (seedId==34))){
 			return this.horizontalPlots(m);
-		}
-		//Alternative parents
-		//Shriekbulb for level 1-2
-		if(seedId==31 && l<=2){
-			m=[29,8];
 		}
 		
 		let plot = this.clone(this.minigame().plot);
@@ -861,7 +865,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	isSeedUnlocked:function(seedId) { return this.getPlant(seedId).unlocked==1; },
 	getPlantParents:function(seedId) {
-		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[2,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,11],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[11,4],[7],[0,10],[31,7],[7,23]];
+		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[2,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,19],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[4,11],[22],[0,10],[31,7],[23,7]];
 		return mutations[seedId-1];
 	},
 	
