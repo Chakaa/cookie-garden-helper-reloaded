@@ -422,6 +422,13 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					)}
 				  </p>
 				  -->
+				  <p>
+					${this.button(
+					  'autoPlot', 'auto plot',
+					  'Set plot automatically', true,
+					  this.config.autoPlot
+					)}
+				  </p>
 				</div>
 				<div class="cookieGardenHelperReloadedPanel" id="manualToolsPanel">
 				  <h2>Manual tools</h2>
@@ -989,7 +996,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		if(this.config.savedPlot.length>0){
 			let [seedId, age] = this.config.savedPlot[y][x];
 			seedId--;
-			if ( this.config.autoHarvestCleanGarden && ((plant.unlocked && seedId == -1) || (seedId > -1 && seedId != plant.id)) ) {
+			if ( this.config.autoHarvestCleanGarden && plant.unlocked && ( seedId != plant.id) ) {
 				this.harvest(x, y);
 			}
 		}
@@ -1002,13 +1009,24 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}else if(this.config.autoHarvestMatured){
 		  this.harvest(x, y);
 		}
+		if(this.config.autoPlot && this.config.savedPlot.length>0){
+			let [seedId, age] = this.config.savedPlot[y][x];
+			seedId--;
+			if ( this.config.autoHarvestCleanGarden &&  (seedId != plant.id) ) {
+				this.harvest(x, y);
+			}
+		}
 	},
 	handleDying:function(plant, x, y){
 		if(!this.isExplodable(plant)){
 			if (this.isCpsBonus(plant) && this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
 			this.harvest(x, y);
 			} else if (this.config.autoHarvestDying && this.secondsBeforeNextTick() <= this.config.autoHarvestDyingSeconds) {
-			this.harvest(x, y);
+				if(this.config.autoPlot) {
+					this.minigame().harvestAll(plant);
+				}else{
+					this.harvest(x, y);
+				}
 			}
 		}
 	},
@@ -1027,12 +1045,71 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		for (var b in Game.buffs){if(Game.buffs[b].hasOwnProperty('multCpS')){mult*=Game.buffs[b].multCpS;}}
 		return mult;
 	},
+	setPlot:function() {
+		var stage1 = [14, 13, 24];
+		var sflag = false;
+		for( var i=0 ; i < stage1.length; i++){
+			if(!this.getPlant(stage1[i]).unlocked) {
+				sflag = true;
+				break;
+			}
+		}
+		this.config.autoHarvestAvoidImmortals = false;
+		this.config.autoHarvestNewSeeds = true;
+		this.config.autoHarvestCheckCpSMult = false;
+		this.config.autoHarvestDying = false;
+		this.config.autoHarvestCheckCpSMultDying = false;
+		this.config.autoPlantAvoidBuffs = true;
+		this.config.autoPlantCheckCpSMult = false;
+		if(sflag) {
+			this.config.autoHarvestMatured = true;
+			this.config.autoHarvestWeeds = false;
+			this.config.autoHarvestCleanGarden = false;
+			this.config.autoPlantRotateSoil = false;
+			//autoPlantRotateSoilCombo: 0,
+		}else{
+			this.config.autoHarvestMatured = false;
+			this.config.autoHarvestWeeds = true;
+			this.config.autoHarvestCleanGarden = true;
+			this.config.autoPlantRotateSoil = true;
+			this.config.autoPlantRotateSoilCombo = 1;
+		}
+		var seeds = [14, 13, 24, 10, 2, 9, 3, 21, 22, 23, 12, 4, 5, 7, 30, 11, 20, 18, 8, 19, 32, 15, 17, 16, 33, 34, 29, 26, 27, 25, 28, 31, 6];
+		this.config.savedPlot=this.buildMutationPlotData(14);
+		for( var i=0 ; i < seeds.length; i++){
+			if(this.getPlant(seeds[i]).unlocked) {
+				continue;
+			}
+			var eflag = false;
+			for (let x=0; x<6; x++) {
+				for (let y=0; y<6; y++) {
+					if (this.getTile(x, y).seedId == seeds[i]) {
+						eflag = true;
+					}
+				}
+			}
+			if ((seeds[i] != 24) && (seeds[i] != 34) && eflag) {
+				continue;
+			}
+			if(seeds[i] == 22) {
+				this.config.autoHarvestDying = true;
+			}
+			if(this.parentsUnlocked(seeds[i])) {
+				this.config.savedPlot=this.buildMutationPlotData(seeds[i]);
+			}
+			break;
+		}
+		return;
+	},
 	run:function() {
 		if(this.isActive()){
 			//Display Seed List
 			this.doc.elId('cghrSeedListDiv').textContent = '';
 			this.doc.elId('cghrSeedListDiv').innerHTML = this.getSeedListDisplay();
 			this.setSeedListTooltips();
+			if(this.config.autoPlot){
+				this.setPlot();
+			}
 
 			//Display Upgrades
 			this.doc.elId('cghrUpgradeListDiv').textContent = '';
@@ -1126,6 +1203,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			autoPlantCheckCpSMult: false,
 			autoPlantMaxiCpSMult: { value: 0, min: 0 },
 			autoForceTicks: false,
+			autoPlot: false,
 			savedPlot: [],
 		}
 		return data;
