@@ -4,6 +4,8 @@ Automate your garden in Cookie Clicker
 
 This is the Steam version of cookie-garden-helper (https://github.com/yannprada/cookie-garden-helper)
 
+This Mod has been uploaded to SteamWorkshop : https://steamcommunity.com/sharedfiles/filedetails/?id=2686171273
+
 ## How to install
 
 Import the CookieGardenHelper-reloaded folder to `<steam>\SteamApps\common\Cookie Clicker\resources\app\mods\local`
