@@ -154,11 +154,15 @@ The rest of your configuration will remain.
 >
 >1.4.6: `Fixed a conflict when CCSE was installed`
 >
->1.4.7: `Added a combo selection for soil rotation, and fixed an issue with the rotation
+>1.4.7: `Added a combo selection for soil rotation, and fixed an issue with the rotation`
 >
->`Clarified some things in this readme`
+>1.4.8: `Clarified some things in this readme`
 >
->`Added a check for bonus CpS on harvest
+>`Added a check for bonus CpS on harvest`
+>
+>1.4.9: `Set the soil rotation after finishing processing all tiles in the plot`
+>
+>1.4.10: `New way to code soil setups (mrpandat)`
 
 ## Issues
 

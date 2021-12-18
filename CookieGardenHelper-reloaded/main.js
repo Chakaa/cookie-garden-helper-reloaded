@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.7-edit';
+		this.version = '1.4.10';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -27,6 +27,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		);
 	},
 	stop:function() { window.clearInterval(this.timerId); },
+	restart:function() { this.stop();this.start(); },
 	handleSeedClick:function(seedId) {
 		if(!this.parentsUnlocked(seedId))return;
 		this.config.savedPlot=this.buildMutationPlotData(seedId);
@@ -412,6 +413,15 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					${this.labelWithState('plotIsSaved', 'No saved plot', 'Plot saved',
 					  Boolean(this.config.savedPlot.length))}
 				  </p>
+				  <!--
+				  <p>
+					${this.button(
+					  'autoForceTicks', 'Force ticks',
+					  'Force grow ticks to happen frequently', true,
+					  this.config.autoForceTicks
+					)}
+				  </p>
+				  -->
 				</div>
 				<div class="cookieGardenHelperReloadedPanel" id="manualToolsPanel">
 				  <h2>Manual tools</h2>
@@ -614,56 +624,67 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		</div>`;
 	},
 	emptyPlot:function() {
-		return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+		var X = [0,0]
+		return [
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+			[X,X,X,X,X,X],
+		];
 	},
 	horizontalPlots:function(parents) {
 		var l = Game.Objects['Farm'].level
 		var p1 = parents[0]+1
 		var p2 = (parents.length>1?parents[1]:parents[0])+1;
+		var X = [0,0]
+		var Y = [p1,0]
+		var Z = [p2,0]
 		if(l>=8){
 			return [
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[p1,0],[p1,0],[p1,0],[p1,0],[p1,0],[p1,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[p2,0],[p2,0],[p2,0],[p2,0],[p2,0],[p2,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[p1,0],[p1,0],[p1,0],[p1,0],[p1,0],[p1,0]]
+				[X,X,X,X,X,X],
+				[Y,Y,Y,Y,Y,Y],
+				[X,X,X,X,X,X],
+				[Z,Z,Z,Z,Z,Z],
+				[X,X,X,X,X,X],
+				[Y,Y,Y,Y,Y,Y]
 			];
 		}else if(l>=7){
 			return [
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[p1,0],[p1,0],[p1,0],[p1,0],[p1,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[p2,0],[p2,0],[p2,0],[p2,0],[p2,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[p1,0],[p1,0],[p1,0],[p1,0],[p1,0]]
+				[X,X,X,X,X,X],
+				[X,Y,Y,Y,Y,Y],
+				[X,X,X,X,X,X],
+				[X,Z,Z,Z,Z,Z],
+				[X,X,X,X,X,X],
+				[X,Y,Y,Y,Y,Y],
 			];
 		}else if(l>=6){
 			return [
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[p2,0],[p2,0],[p2,0],[p2,0],[p2,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[p1,0],[p1,0],[p1,0],[p1,0],[p1,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
+				[X,X,X,X,X,X],
+				[X,X,X,X,X,X],
+				[X,Z,Z,Z,Z,Z],
+				[X,X,X,X,X,X],
+				[X,Y,Y,Y,Y,Y],
+				[X,X,X,X,X,X],
 			];
 		}else if(l>=4){
 			return [
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[p2,0],[p2,0],[p2,0],[p2,0],[0,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[p1,0],[p1,0],[p1,0],[p1,0],[0,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
+				[X,X,X,X,X,X],
+				[X,X,X,X,X,X],
+				[X,Z,Z,Z,Z,X],
+				[X,X,X,X,X,X],
+				[X,Y,Y,Y,Y,X],
+				[X,X,X,X,X,X]
 			];
 		}else if(l>=3){
 			return [
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[0,0],[p2,0],[p2,0],[p2,0],[0,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
-				[[0,0],[0,0],[p1,0],[p1,0],[p1,0],[0,0]],
-				[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
+				[X,X,X,X,X,X],
+				[X,X,X,X,X,X],
+				[X,X,Z,Z,Z,X],
+				[X,X,X,X,X,X],
+				[X,X,Y,Y,Y,X],
+				[X,X,X,X,X,X]
 			];
 		}
 		return this.emptyPlot();
@@ -682,42 +703,133 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		var l = Game.Objects['Farm'].level
 		//Juicy queenbeet
 		if(seedId==22){
+			var Q = [21,0]
+			var X = [0,0]
 			if(l>=9){
-				return [[[21,0],[21,0],[21,0],[21,0],[21,0],[21,0]],[[21,0],[0,0],[21,0],[21,0],[0,0],[21,0]],[[21,0],[21,0],[21,0],[21,0],[21,0],[21,0]],[[21,0],[21,0],[21,0],[21,0],[21,0],[21,0]],[[21,0],[0,0],[21,0],[21,0],[0,0],[21,0]],[[21,0],[21,0],[21,0],[21,0],[21,0],[21,0]]];
+				return [ 
+					[Q,Q,Q,Q,Q,Q],
+					[Q,X,Q,Q,X,Q],
+					[Q,Q,Q,Q,Q,Q],
+					[Q,Q,Q,Q,Q,Q],
+					[Q,X,Q,Q,X,Q],
+					[Q,Q,Q,Q,Q,Q]
+				];
+			}
+			if(l>=7){
+				return [ 
+					[X,X,X,X,X,X],
+					[X,Q,Q,Q,Q,Q],
+					[X,Q,X,Q,X,Q],
+					[X,Q,Q,Q,Q,Q],
+					[X,Q,X,Q,X,Q],
+					[X,Q,Q,Q,Q,Q]
+				];
 			}
 			if(l>=3){
-				return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[21,0],[21,0],[21,0],[0,0]],[[0,0],[0,0],[21,0],[0,0],[21,0],[0,0]],[[0,0],[0,0],[21,0],[21,0],[21,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,X,Q,Q,Q,X],
+					[X,X,Q,X,Q,X],
+					[X,X,Q,Q,Q,X],
+					[X,X,X,X,X,X]
+				];
 			}
 			return this.emptyPlot();
 		}
 		//Golden clover
 		if(seedId==6){
+			var C = [5,0]
+			var X = [0,0]
 			if(l>=9){
-				return [[[5,0],[5,0],[0,0],[5,0],[0,0],[5,0]],[[0,0],[5,0],[0,0],[5,0],[0,0],[5,0]],[[5,0],[0,0],[0,0],[5,0],[0,0],[5,0]],[[5,0],[0,0],[5,0],[0,0],[0,0],[5,0]],[[5,0],[0,0],[5,0],[0,0],[5,0],[0,0]],[[5,0],[0,0],[5,0],[0,0],[5,0],[5,0]]];
+				return [	
+					[C,C,X,C,X,C],
+					[X,C,X,C,X,C],
+					[C,X,X,C,X,C],
+					[C,X,C,X,X,C],
+					[C,X,C,X,C,X],
+					[C,X,C,X,C,C]
+				];
 			}
 			else if(l>=8){
-				return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[5,0],[0,0],[5,0],[0,0],[0,0],[5,0]],[[5,0],[0,0],[5,0],[5,0],[5,0],[5,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[5,0],[0,0],[5,0],[5,0],[5,0],[5,0]],[[5,0],[0,0],[5,0],[0,0],[0,0],[5,0]]];
+				return [	
+					[X,X,X,X,X,X],
+					[C,X,C,X,X,C],
+					[C,X,C,C,C,C],
+					[X,X,X,X,X,X],
+					[C,X,C,C,C,C],
+					[C,X,C,X,X,C]
+				];
 			}
 			else if(l>=7){
-				return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[5,0],[0,0],[5,0],[0,0],[5,0]],[[0,0],[5,0],[0,0],[5,0],[0,0],[5,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[5,0],[0,0],[5,0],[0,0],[5,0]],[[0,0],[5,0],[0,0],[5,0],[0,0],[5,0]]];
+				return [	
+					[X,X,X,X,X,X],
+					[X,C,X,C,X,C],
+					[X,C,X,C,X,C],
+					[X,X,X,X,X,X],
+					[X,C,X,C,X,C],
+					[X,C,X,C,X,C]
+				];
 			}
 			else if(l>=6){
-				return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[5,0],[5,0],[0,0],[5,0],[5,0]],[[0,0],[0,0],[5,0],[0,0],[5,0],[0,0]],[[0,0],[0,0],[5,0],[0,0],[5,0],[0,0]],[[0,0],[5,0],[5,0],[0,0],[5,0],[5,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+				return [	
+					[X,X,X,X,X,X],
+					[X,C,C,X,C,C],
+					[X,X,C,X,C,X],
+					[X,X,C,X,C,X],
+					[X,C,C,X,C,C],
+					[X,X,X,X,X,X]
+				];
 			}
 			else if(l>=5){
-				return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[5,0],[0,0],[5,0],[5,0],[0,0]],[[0,0],[5,0],[0,0],[5,0],[0,0],[0,0]],[[0,0],[5,0],[0,0],[5,0],[0,0],[0,0]],[[0,0],[5,0],[0,0],[5,0],[5,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+				return [	
+					[X,X,X,X,X,X],
+					[X,C,X,C,C,X],
+					[X,C,X,C,X,X],
+					[X,C,X,C,X,X],
+					[X,C,X,C,C,X],
+					[X,X,X,X,X,X]
+				];
 			}
 			else if(l>=4){
-				return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[5,0],[0,0],[5,0],[5,0],[0,0]],[[0,0],[5,0],[0,0],[5,0],[0,0],[0,0]],[[0,0],[5,0],[0,0],[5,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,C,X,C,C,X],
+					[X,C,X,C,X,X],
+					[X,C,X,C,X,X],
+					[X,X,X,X,X,X]
+				];
 			}
 			else if(l>=3){
-				return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[5,0],[0,0],[5,0],[0,0]],[[0,0],[0,0],[5,0],[0,0],[5,0],[0,0]],[[0,0],[0,0],[5,0],[0,0],[5,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,X,C,X,C,X],
+					[X,X,C,X,C,X],
+					[X,X,C,X,C,X],
+					[X,X,X,X,X,X]
+				];
 			}
 			else if(l>=2){
-				return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[5,0],[0,0],[5,0],[0,0]],[[0,0],[0,0],[5,0],[0,0],[5,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,X,C,X,C,X],
+					[X,X,C,X,C,X],
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X]
+				];
 			}
 			else if(l>=1){
-				return [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[5,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[5,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,X,C,X,X,X],
+					[X,X,C,X,X,X],
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X]
+				];
 			}
 			return this.emptyPlot();
 		}
@@ -975,10 +1087,16 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					this.plantSeed(seedId - 1, x, y);
 				}
 			  }
-			  if (this.config.autoPlantRotateSoil){
-				  this.setCorrectSoil();
-			  }
 			});
+
+			if (this.config.autoPlantRotateSoil){
+				this.setCorrectSoil();
+			}
+			if (this.config.autoForceTicks){
+				if(this.minigame().nextStep>Date.now()){
+					this.minigame().nextStep=Date.now()
+				}
+			}
 		}
 	},
 	//Overall functions
@@ -1007,6 +1125,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			autoPlantRotateSoilCombo: 0,
 			autoPlantCheckCpSMult: false,
 			autoPlantMaxiCpSMult: { value: 0, min: 0 },
+			autoForceTicks: false,
 			savedPlot: [],
 		}
 		return data;
