@@ -19,6 +19,14 @@ garden / farms. There, you can configure how you would like the mod to operate.
 The mod loops through each unlocked tile, then tries to auto-harvest
 or auto-plant, depending on what is activated.
 
+### Save plot
+
+First you should save your plot. 
+- Start by manually placing the setup you are interested in.
+- Then press the "Save plot" button to save it for Auto-plant and Auto-Harvest to know what to do.
+
+"Ctrl+click" on the button to delete what was saved. Carefull, Auto-Harvest would clear the actual plot.
+
 ### Auto-harvest
 
 First, it will check if the tile is empty.
@@ -163,6 +171,8 @@ The rest of your configuration will remain.
 >1.4.9: `Set the soil rotation after finishing processing all tiles in the plot`
 >
 >1.4.10: `New way to code soil setups (mrpandat)`
+>
+>1.4.11: `New option to clear the saved plot (ctrl+click the button)`
 
 ## Issues
 

@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.10';
+		this.version = '1.4.11';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -59,8 +59,8 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		if (key == 'fillGardenWithSelectedSeed') {
 			this.fillGardenWithSelectedSeed();
 		} else if (key == 'savePlot') {
-			this.config['savedPlot'] = this.clonePlot();
-			this.labelToggleState('plotIsSaved', true);
+			this.config['savedPlot'] = Game.keys[17]?this.emptyPlot():this.clonePlot();
+			this.labelToggleState('plotIsSaved', !Game.keys[17]);
 		}
 		this.save();
 	},
@@ -409,7 +409,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				  </p>
 				  <p>
 					${this.button('savePlot', 'Save plot',
-					  'Save the current plot; these seeds will be replanted later')}
+					  'Save the current plot; these seeds will be replanted later. Hold Ctrl and click to clear.')}
 					${this.labelWithState('plotIsSaved', 'No saved plot', 'Plot saved',
 					  Boolean(this.config.savedPlot.length))}
 				  </p>
