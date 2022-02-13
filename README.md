@@ -174,7 +174,7 @@ The rest of your configuration will remain.
 >
 >1.4.11: `New option to clear the saved plot (ctrl+click the button)`
 >
->1.4.11-edit: `Auto-plot option and alternative, more optimal seed layouts`
+>1.4.12: `More optimal seed layouts for Shriekbulb, Elderwort, GC`
 
 ## Issues
 
