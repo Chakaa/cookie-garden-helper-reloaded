@@ -34,7 +34,7 @@ First, it will check if the tile is empty.
 If not, it will check if the plant is immortal. If it is, and the **Avoid immortals** option 
 is **ON**, it will ignore this tile.
 
-If not, it will check if the plant is under divine protection. If it is, it will ignore this tile.
+If not, it will check if the plant is under Divine Protection. If it is, it will ignore this tile.
 
 If not, it will compute the plant stage. Below is a list of these stages 
 and the conditions when the plant will be harvested:
@@ -103,7 +103,7 @@ Red if you cannot unlock it yet (one or both parents are not unlocked).
 
 **Clicking** on its name will overwrite the saved plot by the suggested layout, for use with **Auto-plant**.
 
-**Ctrl+Clicking** on its name will apply the divine protection, making the Auto-Harvest ignore it.
+**Ctrl+Clicking** on its name will apply, or remove, the Divine Protection, making the Auto-Harvest ignore it.
 
 ## Sacrifice garden
 
