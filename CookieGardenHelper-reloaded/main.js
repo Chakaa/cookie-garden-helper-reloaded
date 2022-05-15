@@ -3,7 +3,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	init:function(){
 		this.name = 'Cookie Garden Helper - Reloaded';
 		this.modid = 'cookiegardenhelperreloaded';
-		this.version = '1.4.11';
+		this.version = '1.5';
 		this.GameVersion = '2.042';
 		
 		this.config = this.defaultConfig();
@@ -29,8 +29,19 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	stop:function() { window.clearInterval(this.timerId); },
 	restart:function() { this.stop();this.start(); },
 	handleSeedClick:function(seedId) {
-		if(!this.parentsUnlocked(seedId))return;
-		this.config.savedPlot=this.buildMutationPlotData(seedId);
+		if(Game.keys[17]){
+			if(!this.config.protectedSeeds.includes(seedId)){
+				this.config.protectedSeeds.push(seedId);
+			}else{
+				this.config.protectedSeeds.splice(this.config.protectedSeeds.indexOf(seedId), 1);  //deleting
+			}
+			
+			this.doc.elId('cghrSeedListDiv').innerHTML = this.getSeedListDisplay();
+		}else{
+			if(!this.parentsUnlocked(seedId))return;
+			this.config.savedPlot=this.buildMutationPlotData(seedId);
+			this.labelToggleState('plotIsSaved', true);
+		}
 	},
 	handleChange:function(key, value) {
 		if (this.config[key].value !== undefined) {
@@ -203,8 +214,16 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			top: -4px;
 			width: 48px;
 			height: 48px;
-			background: url(img/gardenPlants.png?v=2.042);
 			vertical-align: middle;
+		}
+		.cookieGardenHelperReloadedDarkenSeed {
+			background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(img/gardenPlants.png?v=2.042);
+		}
+		.cookieGardenHelperReloadedBrightenSeed {
+			background: radial-gradient(circle closest-side, rgba(246, 247, 171, 0.25), rgba(0, 0, 0, 0)), url(img/gardenPlants.png?v=2.042);
+		}
+		.cookieGardenHelperReloadedSeed {
+			background: url(img/gardenPlants.png?v=2.042);
 		}
 		`;
 	},
@@ -436,7 +455,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				</div>
 				<div class="cookieGardenHelperReloadedSeedPanel" id="seedList">
 				  <h2>Seed List ${this.button('ToggleSeedList', '+', 
-					'Display or hide seed list. In orange, what could be unlocked. In red, what cannot.')}</h2>
+					'Display or hide seed list. In orange, what could be unlocked. In red, what cannot. Hold Ctrl and click to prevent autoHarvest.')}</h2>
 				  <p id="cghrSeedListDiv" style="display:none"></p>
 				</div>
 			  </div>
@@ -494,10 +513,11 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	getSeedListDisplay:function() {
 		str = "";
 		if(this.isActive()){
+			str += "<p>Orange - Unlockable / Red - Locked / Aura - Protection against AutoHarvest (Ctrl+Click)</p>";
 			for (let i = 1; i <= this.minigame().plantsById.length; i++){
 				var p = this.getPlant(i)
 				str += `<div class="cookieGardenHelperReloadedSmallSubPanel seedListItem" id="plant-${i}">
-					<div id="gardenSeedIcon-${i}" class="cookieGardenHelperReloadedGardenSeed shadowFilter" style="background-position:0px ${this.getSeedIconY(i)}px;"></div>
+					<div id="gardenSeedIcon-${i}" class="cookieGardenHelperReloadedGardenSeed shadowFilter${this.config.protectedSeeds.includes(i)?" cookieGardenHelperReloadedBrightenSeed":" cookieGardenHelperReloadedSeed"} " style="background-position:0px ${this.getSeedIconY(i)}px;"></div>
 					<div style="display:inline-block;${p.unlocked==1?'':(!this.parentsUnlocked(i)?'color:red;':'color:orange;')}">${i} - ${p.name}</div>
 				</div>`;
 			}
@@ -1253,7 +1273,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				let tile = this.getTile(x, y);
 				let plant = this.getPlant(tile.seedId);
 
-				if (plant.immortal && this.config.autoHarvestAvoidImmortals) {
+				if ((plant.immortal && this.config.autoHarvestAvoidImmortals) || this.config.protectedSeeds.includes(tile.seedId)) {
 				  // do nothing
 				} else {
 				  let stage = this.getPlantStage(tile);
@@ -1324,6 +1344,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			autoPlantMaxiCpSMult: { value: 0, min: 0 },
 			autoForceTicks: false,
 			savedPlot: [],
+			protectedSeeds: [],
 		}
 		return data;
 	},
