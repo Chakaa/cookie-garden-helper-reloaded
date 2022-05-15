@@ -40,6 +40,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}else{
 			if(!this.parentsUnlocked(seedId))return;
 			this.config.savedPlot=this.buildMutationPlotData(seedId);
+			this.labelToggleState('plotIsSaved', true);
 		}
 	},
 	handleChange:function(key, value) {
