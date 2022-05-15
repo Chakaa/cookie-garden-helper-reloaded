@@ -177,6 +177,8 @@ The rest of your configuration will remain.
 >1.4.10: `New way to code soil setups (mrpandat)`
 >
 >1.4.11: `New option to clear the saved plot (ctrl+click the button)`
+>
+>1.4.12: `More optimal seed layouts for Shriekbulb, Elderdaisy, JQB, GC`
 
 ### 1.5
 

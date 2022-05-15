@@ -735,6 +735,16 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[Q,Q,Q,Q,Q,Q]
 				];
 			}
+			if(l>=8){
+				return [ 
+					[X,X,X,X,X,X],
+					[Q,Q,Q,Q,Q,Q],
+					[Q,X,Q,Q,X,Q],
+					[Q,Q,Q,Q,Q,Q],
+					[Q,X,Q,Q,X,Q],
+					[Q,Q,Q,Q,Q,Q]
+				];
+			}
 			if(l>=7){
 				return [ 
 					[X,X,X,X,X,X],
@@ -743,6 +753,36 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					[X,Q,Q,Q,Q,Q],
 					[X,Q,X,Q,X,Q],
 					[X,Q,Q,Q,Q,Q]
+				];
+			}
+			if(l>=6){
+				return [ 
+					[X,X,X,X,X,X],
+					[X,Q,Q,Q,Q,Q],
+					[X,Q,X,Q,X,Q],
+					[X,Q,Q,Q,Q,Q],
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X]
+				];
+			}
+			if(l>=5){
+				return [ 
+					[X,X,X,X,X,X],
+					[X,Q,Q,Q,X,X],
+					[X,Q,X,Q,X,X],
+					[X,Q,Q,Q,X,X],
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X]
+				];
+			}
+			if(l>=4){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,Q,Q,Q,X,X],
+					[X,Q,X,Q,X,X],
+					[X,Q,Q,Q,X,X],
+					[X,X,X,X,X,X]
 				];
 			}
 			if(l>=3){
@@ -763,21 +803,21 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			var X = [0,0]
 			if(l>=9){
 				return [	
-					[C,C,X,C,X,C],
-					[X,C,X,C,X,C],
 					[C,X,X,C,X,C],
-					[C,X,C,X,X,C],
-					[C,X,C,X,C,X],
-					[C,X,C,X,C,C]
+					[C,C,C,C,C,X],
+					[X,X,X,X,C,C],
+					[C,C,X,X,X,X],
+					[X,C,C,C,C,C],
+					[C,X,C,X,X,C]
 				];
 			}
 			else if(l>=8){
 				return [	
 					[X,X,X,X,X,X],
 					[C,X,C,X,X,C],
-					[C,X,C,C,C,C],
+					[C,C,C,X,X,C],
 					[X,X,X,X,X,X],
-					[C,X,C,C,C,C],
+					[C,C,C,X,X,C],
 					[C,X,C,X,X,C]
 				];
 			}
@@ -804,10 +844,10 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			else if(l>=5){
 				return [	
 					[X,X,X,X,X,X],
-					[X,C,X,C,C,X],
-					[X,C,X,C,X,X],
-					[X,C,X,C,X,X],
-					[X,C,X,C,C,X],
+					[X,C,X,X,C,X],
+					[X,C,C,C,C,X],
+					[X,X,X,X,X,X],
+					[X,C,C,C,C,X],
 					[X,X,X,X,X,X]
 				];
 			}
@@ -815,9 +855,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,C,X,C,C,X],
-					[X,C,X,C,X,X],
-					[X,C,X,C,X,X],
+					[X,X,C,X,C,X],
+					[X,X,C,X,C,X],
+					[X,C,C,X,C,X],
 					[X,X,X,X,X,X]
 				];
 			}
@@ -845,22 +885,179 @@ Game.registerMod("cookiegardenhelperreloaded",{
 				return [	
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X],
-					[X,X,C,X,X,X],
-					[X,X,C,X,X,X],
+					[X,X,X,X,X,X],
+					[X,X,C,C,X,X],
 					[X,X,X,X,X,X],
 					[X,X,X,X,X,X]
 				];
 			}
 			return this.emptyPlot();
 		}
-		//Shriekbulb && Everdaisy : Horizontal Lines
-		if((seedId==31 && l>=3) || seedId==33){
-			return this.horizontalPlots(m);
+		//Shriekbulb from Elderwort
+		if(seedId==31){
+			var E = [8,0]
+			var X = [0,0]
+			if(l>=9){
+				return [ 
+					[X,E,E,E,E,X],
+					[E,X,X,X,X,E],
+					[E,X,E,E,X,E],
+					[E,X,E,E,X,E],
+					[E,X,X,X,X,E],
+					[X,E,E,E,E,X]
+				];
+			}
+			else if(l>=8){
+				return [	
+					[X,X,X,X,X,X],
+					[E,E,X,E,X,E],
+					[X,E,X,E,E,E],
+					[E,E,X,X,E,X],
+					[X,E,X,E,E,E],
+					[E,E,X,E,X,E]
+				];
+			}
+			else if(l>=7){
+				return [	
+					[X,X,X,X,X,X],
+					[X,E,E,X,E,E],
+					[X,X,E,X,E,X],
+					[X,E,E,X,E,E],
+					[X,X,E,X,E,X],
+					[X,E,E,X,E,E]
+				];
+			}
+			else if(l>=6){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,E,E,E,X],
+					[X,X,X,X,X,X],
+					[X,E,E,E,E,E],
+					[X,E,X,E,X,E],
+					[X,X,X,X,X,X]
+				];
+			}
+			else if(l>=5){
+				return [	
+					[X,X,X,X,X,X],
+					[X,E,E,X,E,X],
+					[X,X,E,E,E,X],
+					[X,E,E,E,X,X],
+					[X,E,X,E,E,X],
+					[X,X,X,X,X,X]
+				];
+			}
+			else if(l>=4){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,E,X,E,E,X],
+					[X,E,E,E,X,X],
+					[X,E,X,E,E,X],
+					[X,X,X,X,X,X]
+				];
+			}
+			else if(l>=3){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,X,E,X,E,X],
+					[X,X,E,E,E,X],
+					[X,X,E,X,E,X],
+					[X,X,X,X,X,X]
+				];
+			}
+			else if(l>=2){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,X,E,X,E,X],
+					[X,X,E,E,E,X],
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X]
+				];
+			}
+			else if(l<2){ //Alternative parents
+				m=[29,8];
+			}
+			return this.emptyPlot();
 		}
-		//Alternative parents
-		//Shriekbulb for level 1-2
-		if(seedId==31 && l<=2){
-			m=[29,8];
+		//Everdaisy
+		if(seedId==33){
+			var T = [32,0]
+			var E = [8,0]
+			var X = [0,0]
+			if(l>=9){
+				return [	
+					[X,T,E,E,X,T],
+					[T,T,X,T,X,T],
+					[E,X,X,E,X,E],
+					[E,T,E,E,X,T],
+					[X,X,X,X,T,T],
+					[T,T,E,T,T,X]
+				];
+			}
+			else if(l>=8){
+				return [	
+					[X,X,X,X,X,X],
+					[T,T,T,T,T,T],
+					[X,X,X,X,X,X],
+					[E,E,E,E,E,E],
+					[X,X,X,X,X,X],
+					[T,T,T,T,T,T]
+				];
+			}
+			else if(l>=7){
+				return [	
+					[X,X,X,X,X,X],
+					[X,T,T,T,T,T],
+					[X,X,X,X,X,X],
+					[X,E,E,E,E,E],
+					[X,X,X,X,X,X],
+					[X,T,T,T,T,T]
+				];
+			}
+			else if(l>=6){
+				return [	
+					[X,X,X,X,X,X],
+					[X,T,X,E,X,T],
+					[X,T,X,E,X,T],
+					[X,T,X,E,X,T],
+					[X,T,X,E,X,T],
+					[X,X,X,X,X,X]
+				];
+			}
+			else if(l>=5){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,T,E,E,X],
+					[X,T,T,X,T,X],
+					[X,E,X,X,E,X],
+					[X,E,T,E,E,X],
+					[X,X,X,X,X,X]
+				];
+			}
+			else if(l>=4){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,E,E,E,E,X],
+					[X,X,X,X,X,X],
+					[X,T,T,T,T,X],
+					[X,X,X,X,X,X]
+				];
+			}
+			else if(l>=3){
+				return [	
+					[X,X,X,X,X,X],
+					[X,X,X,X,X,X],
+					[X,X,E,X,T,X],
+					[X,X,E,X,T,X],
+					[X,X,E,X,T,X],
+					[X,X,X,X,X,X]
+				];
+			}
+			return this.emptyPlot();
 		}
 		
 		let plot = this.clone(this.minigame().plot);
