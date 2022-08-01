@@ -441,6 +441,13 @@ Game.registerMod("cookiegardenhelperreloaded",{
 					)}
 				  </p>
 				  -->
+				  <p>
+					${this.button(
+					  'autoPlot', 'auto plot',
+					  'Set plot automatically', true,
+					  this.config.autoPlot
+					)}
+				  </p>
 				</div>
 				<div class="cookieGardenHelperReloadedPanel" id="manualToolsPanel">
 				  <h2>Manual tools</h2>
@@ -661,7 +668,16 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		var X = [0,0]
 		var Y = [p1,0]
 		var Z = [p2,0]
-		if(l>=8){
+		if(this.config.autoPlot && (l>=9)){
+			return [
+				[Y,Y,Y,Y,Y,Y],
+				[X,X,X,X,X,X],
+				[Z,Z,Z,Z,Z,Z],
+				[Z,Z,Z,Z,Z,Z],
+				[X,X,X,X,X,X],
+				[Y,Y,Y,Y,Y,Y]
+			];
+		}else if(l>=8){
 			return [
 				[X,X,X,X,X,X],
 				[Y,Y,Y,Y,Y,Y],
@@ -757,9 +773,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			return this.emptyPlot();
 		}
-		//Golden clover
-		if(seedId==6){
-			var C = [5,0]
+		//Golden clover, Shriekbulb, brown mold, Crumbspore
+		if(seedId==6 || seedId==31 || seedId==13 || seedId==24){
+			var C = [m[0] + 1,0]
 			var X = [0,0]
 			if(l>=9){
 				return [	
@@ -853,14 +869,9 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			}
 			return this.emptyPlot();
 		}
-		//Shriekbulb && Everdaisy : Horizontal Lines
-		if((seedId==31 && l>=3) || seedId==33){
+		//Everdaisy, Ichorpuff : Horizontal Lines
+		if((seedId==33) || (this.config.autoPlot && (seedId==34))){
 			return this.horizontalPlots(m);
-		}
-		//Alternative parents
-		//Shriekbulb for level 1-2
-		if(seedId==31 && l<=2){
-			m=[29,8];
 		}
 		
 		let plot = this.clone(this.minigame().plot);
@@ -874,7 +885,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 	},
 	isSeedUnlocked:function(seedId) { return this.getPlant(seedId).unlocked==1; },
 	getPlantParents:function(seedId) {
-		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[2,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,11],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[11,4],[7],[0,10],[31,7],[7,23]];
+		var mutations = [[0],[0],[0,1],[1,2],[0,3],[4],[4,3],[2,6],[0],[0,12],[9,11],[12],[13],[],[6,10],[6,14],[14],[9,19],[2,19],[29,12],[8,9],[20],[20],[13],[23],[23,1],[23,6],[24,29],[23,12],[4,11],[22],[0,10],[31,7],[23,7]];
 		return mutations[seedId-1];
 	},
 	
@@ -1009,7 +1020,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		if(this.config.savedPlot.length>0){
 			let [seedId, age] = this.config.savedPlot[y][x];
 			seedId--;
-			if ( this.config.autoHarvestCleanGarden && ((plant.unlocked && seedId == -1) || (seedId > -1 && seedId != plant.id)) ) {
+			if ( this.config.autoHarvestCleanGarden && plant.unlocked && ( seedId != plant.id) ) {
 				this.harvest(x, y);
 			}
 		}
@@ -1022,13 +1033,24 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		}else if(this.config.autoHarvestMatured){
 		  this.harvest(x, y);
 		}
+		if(this.config.autoPlot && this.config.savedPlot.length>0){
+			let [seedId, age] = this.config.savedPlot[y][x];
+			seedId--;
+			if ( this.config.autoHarvestCleanGarden &&  (seedId != plant.id) ) {
+				this.harvest(x, y);
+			}
+		}
 	},
 	handleDying:function(plant, x, y){
 		if(!this.isExplodable(plant)){
 			if (this.isCpsBonus(plant) && this.config.autoHarvestCheckCpSMultDying && this.CpSMult() >= this.config.autoHarvestMiniCpSMultDying.value) {
 			this.harvest(x, y);
 			} else if (this.config.autoHarvestDying && this.secondsBeforeNextTick() <= this.config.autoHarvestDyingSeconds) {
-			this.harvest(x, y);
+				if(this.config.autoPlot) {
+					this.minigame().harvestAll(plant);
+				}else{
+					this.harvest(x, y);
+				}
 			}
 		}
 	},
@@ -1047,12 +1069,71 @@ Game.registerMod("cookiegardenhelperreloaded",{
 		for (var b in Game.buffs){if(Game.buffs[b].hasOwnProperty('multCpS')){mult*=Game.buffs[b].multCpS;}}
 		return mult;
 	},
+	setPlot:function() {
+		var stage1 = [14, 13, 24];
+		var sflag = false;
+		for( var i=0 ; i < stage1.length; i++){
+			if(!this.getPlant(stage1[i]).unlocked) {
+				sflag = true;
+				break;
+			}
+		}
+		this.config.autoHarvestAvoidImmortals = false;
+		this.config.autoHarvestNewSeeds = true;
+		this.config.autoHarvestCheckCpSMult = false;
+		this.config.autoHarvestDying = false;
+		this.config.autoHarvestCheckCpSMultDying = false;
+		this.config.autoPlantAvoidBuffs = true;
+		this.config.autoPlantCheckCpSMult = false;
+		if(sflag) {
+			this.config.autoHarvestMatured = true;
+			this.config.autoHarvestWeeds = false;
+			this.config.autoHarvestCleanGarden = false;
+			this.config.autoPlantRotateSoil = false;
+			//autoPlantRotateSoilCombo: 0,
+		}else{
+			this.config.autoHarvestMatured = false;
+			this.config.autoHarvestWeeds = true;
+			this.config.autoHarvestCleanGarden = true;
+			this.config.autoPlantRotateSoil = true;
+			this.config.autoPlantRotateSoilCombo = 1;
+		}
+		var seeds = [14, 13, 24, 10, 2, 9, 3, 21, 22, 23, 12, 4, 5, 7, 30, 11, 20, 18, 8, 19, 32, 15, 17, 16, 33, 34, 29, 26, 27, 25, 28, 31, 6];
+		this.config.savedPlot=this.buildMutationPlotData(14);
+		for( var i=0 ; i < seeds.length; i++){
+			if(this.getPlant(seeds[i]).unlocked) {
+				continue;
+			}
+			var eflag = false;
+			for (let x=0; x<6; x++) {
+				for (let y=0; y<6; y++) {
+					if (this.getTile(x, y).seedId == seeds[i]) {
+						eflag = true;
+					}
+				}
+			}
+			if ((seeds[i] != 24) && (seeds[i] != 34) && eflag) {
+				continue;
+			}
+			if(seeds[i] == 22) {
+				this.config.autoHarvestDying = true;
+			}
+			if(this.parentsUnlocked(seeds[i])) {
+				this.config.savedPlot=this.buildMutationPlotData(seeds[i]);
+			}
+			break;
+		}
+		return;
+	},
 	run:function() {
 		if(this.isActive()){
 			//Display Seed List
 			this.doc.elId('cghrSeedListDiv').textContent = '';
 			this.doc.elId('cghrSeedListDiv').innerHTML = this.getSeedListDisplay();
 			this.setSeedListTooltips();
+			if(this.config.autoPlot){
+				this.setPlot();
+			}
 
 			//Display Upgrades
 			this.doc.elId('cghrUpgradeListDiv').textContent = '';
@@ -1146,6 +1227,7 @@ Game.registerMod("cookiegardenhelperreloaded",{
 			autoPlantCheckCpSMult: false,
 			autoPlantMaxiCpSMult: { value: 0, min: 0 },
 			autoForceTicks: false,
+			autoPlot: false,
 			savedPlot: [],
 			protectedSeeds: [],
 		}
